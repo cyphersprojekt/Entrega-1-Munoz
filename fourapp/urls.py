@@ -19,4 +19,5 @@ from fourapp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('crear_post/', views.crear_post, name='crear_post'),
 ]
