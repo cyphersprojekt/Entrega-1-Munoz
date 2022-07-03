@@ -4,22 +4,12 @@
 
 {% block body %}
 <body>
-    <form action="/crear_post/" method="post">
-        <label for="Name">Name</label>
-        <input type="text" name="name" id="name">
-        <br>
-        <label for="title">Title</label>
-        <input type="text" name="title" value="">
-        <br>
-        <label for="content">Content</label>
-        <textarea name="content" id="content" cols="20" rows="7"></textarea>
-        <br>
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image">
-        <br>
-        <label for="category">Category</label>
-        <input type="number" name="category" id="category">
-        <input type="submit" value="Create Post">
+    <form method="POST" class="post-form">
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+
     </form>
+
+</body>
 {% endblock %}
 </html>
