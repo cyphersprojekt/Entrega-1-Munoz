@@ -11,11 +11,10 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
-    postid = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255, null=True)
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=255, null=False, blank=False, default='anon')
+    title = models.CharField(max_length=255, null=False)
+    content = models.TextField(null=False, blank=False)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
-    def __str__(self):
-        return self.title
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_date = models.DateTimeField(auto_now_add=True)
