@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from email.mime import image
 from django.db import models
 
@@ -11,6 +12,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     postid = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=255, null=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
