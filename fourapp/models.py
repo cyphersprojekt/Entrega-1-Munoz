@@ -6,7 +6,9 @@ from django.db import models
 
 class Category(models.Model):
     categoryid = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, null=False)
+    short = models.CharField(max_length=3, null=False)
+    description = models.TextField(null=True)
     def __str__(self):
         return self.name
 
@@ -18,3 +20,5 @@ class Post(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
