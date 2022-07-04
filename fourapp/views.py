@@ -5,3 +5,7 @@ from .models import Category, Post
 
 def index(request):
     return render(request, 'index.html')
+
+def image(request, image_id):
+    image = Post.objects.get(post_id=image_id)
+    return render(request, 'image.html', {'image': image})
