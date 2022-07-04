@@ -21,3 +21,8 @@ def new_post(request):
         post = Post(username=username, title=title, content=content, image=image, category=Category.objects.get(categoryid=category))
         post.save()
         return redirect('index')
+
+def view_category(request, category_id):
+    category = Category.objects.get(categoryid=category_id)
+    posts = Post.objects.filter(category=category).order_by('-post_id')
+    return render(request, 'view_category.html', {'category': category, 'posts': posts})

@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('new_post/', views.new_post, name='new_post'),
     path('image/<int:image_id>', views.image, name='image'),
+    path('view_category/<int:category_id>', views.view_category, name='view_category'),
 ]
