@@ -19,5 +19,6 @@ from fourapp import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('new_post/', views.new_post, name='new_post'),
     path('image/<int:image_id>', views.image, name='image'),
 ]

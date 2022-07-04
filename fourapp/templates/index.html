@@ -4,12 +4,14 @@
 
 {% block body %}
 <body>
-    <form method="POST" class="post-form">
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-
+    <form action="/new_post/" method="post" enctype="multipart/form-data" >
+        <input type="text" name="username" placeholder="username"> <br>
+        <input type="text" name="title" placeholder="title"><br>
+        <input type="text" name="content" placeholder="content"><br>
+        <input type="file" name="image" placeholder="image"><br>
+        <input type="number" name="category" placeholder="category"><br>
+        <input type="submit" value="Submit"><br>
     </form>
-
 </body>
 {% endblock %}
 </html>
