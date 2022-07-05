@@ -12,9 +12,8 @@
         <p>{{ post.content }}</p>
         <p>{{ post.username }}</p>
         {% if post.image %}
-        <img style="width:20%; height:20%" src="../media/{{ post.image }}">
-        {% endif %}
-        
+        <a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}"></a>
+        {% endif %}        
         <p>{{ post.created_at }}</p>
         <p>{{ post.post_date }}</p>
     {% endfor %}

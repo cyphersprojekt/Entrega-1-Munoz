@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from .models import Category, Post
 from .forms import PostForm
+from os import remove
 
 # Create your views here.
 

@@ -24,6 +24,12 @@
         
         <input type="submit" value="Submit"><br>
     </form>
+
+    {% for category in categories %}
+    <div>
+    <a href="/{{category.short}}">{{ category.description }}</a>
+    </div>
+    {% endfor %}
 </body>
 {% endblock %}
 </html>
