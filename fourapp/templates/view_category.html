@@ -8,10 +8,13 @@
 </head>
 <body>
     {% for post in posts %}
-        <h1>{{ post.title }}</h1>
+        <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
         <p>{{ post.username }}</p>
+        {% if post.image %}
         <img style="width:20%; height:20%" src="../media/{{ post.image }}">
+        {% endif %}
+        
         <p>{{ post.created_at }}</p>
         <p>{{ post.post_date }}</p>
     {% endfor %}
