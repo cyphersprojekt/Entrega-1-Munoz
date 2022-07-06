@@ -20,9 +20,9 @@ from fourapp import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('new_post/', views.new_post, name='new_post'),
-    path('image/<int:image_id>', views.image, name='image'),
-    path('view_category/<int:category_id>', views.view_category_by_id, name='view_category'),
-    path('<str:short>', views.view_category_by_short, name='view_category'),
+    path('', views.index, name='index'), #index
+    path('new_post/', views.new_post, name='new_post'), #no hay nada en el url, se usa para crear un nuevo post
+    path('image/<int:image_id>', views.image, name='image'), #no hay nada en el url, se usa para mostrar una imagen
+    path('view_category/<int:category_id>', views.view_category_by_id, name='view_category'), #ver la categoría por id {/view_category/1}
+    path('<str:short>', views.view_category_by_short, name='view_category'), #ver la categoría por short {/sci}
 ]

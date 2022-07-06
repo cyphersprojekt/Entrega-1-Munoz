@@ -3,18 +3,24 @@
 {% block head %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <title>4jango</title>
 {% endblock %}
 
 {% block body %}
 <body>
-    <form action="/new_post/" method="post" enctype="multipart/form-data" >
+    <div class="container">
+    <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" >
+        <label for="title">username</label>
         <input type="text" name="username" placeholder="username"> <br>
+        <label for="title">title</label>
         <input type="text" name="title" placeholder="title"><br>
+        <label for="content">content</label>
         <input type="text" name="content" placeholder="content"><br>
-        <input type="file" name="image" placeholder="image"><br>
+        <label for="image">image</label>
+        <input class="form-control-file"type="file" name="image" placeholder="image"><br>
+        <label for="category">board</label>
         
             <select name="category">
                 {% for category in categories %}
@@ -24,12 +30,14 @@
         
         <input type="submit" value="Submit"><br>
     </form>
-
-    {% for category in categories %}
-    <div>
-    <a href="/{{category.short}}">{{ category.description }}</a>
     </div>
-    {% endfor %}
+    <div class="container">
+            {% for category in categories %}
+    <a href="/{{category.short}}">{{ category.description }}</a><br>
+            {% endfor %}
+        </div>
+    
+
 </body>
 {% endblock %}
 </html>
