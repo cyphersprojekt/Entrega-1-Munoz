@@ -52,7 +52,10 @@ def reply(request, post_id):
     if request.method == 'POST':
         username = request.POST['username']
         content = request.POST['content']
-        image = request.FILES['image']
+        try:
+            image = request.FILES['image']
+        except:
+            image = None
         post = Post.objects.get(post_id=post_id)
         reply = Reply(username=username, content=content, image=image, post=post)
         reply.save()

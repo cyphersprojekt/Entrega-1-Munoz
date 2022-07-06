@@ -26,4 +26,5 @@ urlpatterns = [
     path('view_category/<int:category_id>', views.view_category_by_id, name='view_category'), #ver la categoría por id {/view_category/1}
     path('<str:short>', views.view_category_by_short, name='view_category'), #ver la categoría por short {/sci}
     path('post/<int:post_id>', views.view_post, name='view_post'), #ver el post por id {/post/1}
+    path('post/<int:post_id>/reply', views.reply, name='reply'), #crear una respuesta al post {/post/1/reply}
 ]
