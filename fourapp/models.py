@@ -20,7 +20,7 @@ class Post(models.Model):
     username = models.CharField(max_length=255, null=False, blank=False, default='anon')
     title = models.CharField(max_length=255, null=False)
     content = models.TextField(null=False, blank=False)
-    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    image = models.ImageField(upload_to='postimgs/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     post_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
@@ -31,6 +31,7 @@ class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     username = models.CharField(max_length=255, null=False, blank=False, default='anon')
     content = models.TextField(null=False, blank=False)
+    image = models.ImageField(upload_to='replyimgs/', null=True, blank=True)
     reply_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.content
