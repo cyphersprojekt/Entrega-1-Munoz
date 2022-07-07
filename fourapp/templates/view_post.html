@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>4jango</title>
 </head>
 <body>
     <h2>{{ post.title }}</h2>
-    <p><small>#{{ post.post_id }}</small></p>
-    <h4>{{ post.username }} | {{ post.post_date }}</h4>
+    <p><small>#{{ post.post_id }} | {{ post.post_date }}</small></p>
     <p>{{ post.content }}</p>
     {% if post.image %}
     <a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}"></a>
@@ -17,9 +16,8 @@
     <p></p>
     <div id="reply">
         <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
-            <label for="username">username</label>
-            <input type="text" name="username" placeholder="username"><br>
-            <textarea name="content" rows="5" cols="40"></textarea><br>
+            <textarea name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
+            <textarea name="content" rows="5" cols="40" placeholder="content"></textarea><br>
             <input class="form-control-file"type="file" name="image" placeholder="image"><br>
             <input type="submit" value="Reply">
         </form>

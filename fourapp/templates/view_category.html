@@ -9,14 +9,12 @@
 <body>
     {% for post in posts %}
         <a href="/post/{{ post.post_id }}" target="_blank"><h2>{{ post.title }}</h2></a>
-        <p><small>#{{ post.post_id }}</small></p>
+        <p><small>#{{ post.post_id }} | {{ post.post_date }}</small></p>
+        <h4>{{ post.username }} </h4>
         <p>{{ post.content }}</p>
-        <p>{{ post.username }}</p>
         {% if post.image %}
         <a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}"></a>
         {% endif %}        
-        <p>{{ post.created_at }}</p>
-        <p>{{ post.post_date }}</p>
     {% endfor %}
 </body>
 </html>

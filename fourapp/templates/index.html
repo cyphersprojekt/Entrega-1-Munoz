@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-{% block head %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <title>4jango</title>
-{% endblock %}
 
-{% block body %}
 <body>
-    <div class="container">
+
+    <div class="newPostForm">
     <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" >
-        <label for="title">username</label>
-        <input type="text" name="username" placeholder="username"> <br>
-        <label for="title">title</label>
-        <input type="text" name="title" placeholder="title"><br>
-        <label for="content">content</label>
-        <input type="text" name="content" placeholder="content"><br>
-        <label for="image">image</label>
-        <input class="form-control-file"type="file" name="image" placeholder="image"><br>
-        <label for="category">board</label>
-        
+        <textarea name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
+        <textarea name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
+        <textarea name="content" rows="5" cols="40" placeholder="content"></textarea><br>
+        <input class="form-control-file"type="file" name="image" placeholder="image"><br>        
             <select name="category">
                 {% for category in categories %}
                 <option value="{{ category.categoryid }}">{{ category.name }}</option>
                 {% endfor %}
-            </select><br>
-        
+            </select>        
         <input type="submit" value="Submit"><br>
     </form>
     </div>
-    <div class="container">
+
+    <div>
+        <table class="listCategories">
+            <tr>
+                <th class="listCategoriesShortNameTH">Short name</th>
+                <th class="listCategoriesFullNameTH">Name</th>
+            </tr>
             {% for category in categories %}
-    <a href="/{{category.short}}">{{ category.description }}</a><br>
+            <tr>
+                <td class="listCategoriesShortNameTD"><a href="/{{category.short}}">{{ category.short }}</a></td>
+                <td class="listCategoriesFullNameTD"><a href="/{{category.short}}">{{ category.name }}</a></td>
+            </tr>
             {% endfor %}
-        </div>
+        </table>
+    </div>
     
 
 </body>
-{% endblock %}
 </html>
