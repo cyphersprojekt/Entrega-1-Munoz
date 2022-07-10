@@ -35,7 +35,7 @@
         <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
             <textarea name="username" rows="1" cols="40" placeholder="username"></textarea><br>
             <textarea name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
-            <input class="form-control-file" type="file" name="image" id="image">
+            <input class="form-control-file" type="file" name="image" id="image" accept="image/*">
             <input type="submit" value="Reply">
         </form>
     </div>

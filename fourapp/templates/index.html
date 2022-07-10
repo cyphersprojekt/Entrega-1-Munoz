@@ -13,7 +13,7 @@
         <textarea name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
         <textarea name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
         <textarea name="content" rows="5" cols="40" placeholder="content"></textarea><br>
-        <input class="form-control-file"type="file" name="image" placeholder="image"><br>        
+        <input class="form-control-file"type="file" name="image" placeholder="image" accept="image/*"><br>        
             <select name="category">
                 {% for category in categories %}
                 <option value="{{ category.categoryid }}">{{ category.name }}</option>
