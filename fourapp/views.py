@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.db import connection
 from .models import Category, Post, Reply
 from .forms import PostForm
+from .functions import clear_posts
 
 # Create your views here.
 
@@ -33,15 +34,35 @@ def new_post(request):
         post.save()
         return redirect('/')
 
+def post_from_category(request, short):
+    if request.method == 'POST':
+        username = request.POST['username']
+        title = request.POST['title']
+        content = request.POST['content']
+        category = Category.objects.get(short=short)
+        try:
+            image = request.FILES['image']
+        except:
+            image = None
+        post = Post(username=username, title=title, \
+        content=content, image=image, \
+        category=category)
+        post.save()
+        return redirect(f'/{short}')
+    else:
+        return render(request, 'post_from_category.html', {'category': Category.objects.get(short=short)})
+
 def view_category_by_id(request, category_id):
     category = Category.objects.get(categoryid=category_id)
+    categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
-    return render(request, 'view_category.html', {'category': category, 'posts': posts})
+    return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
 
 def view_category_by_short(request, short):
     category = Category.objects.get(short=short)
+    categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
-    return render(request, 'view_category.html', {'category': category, 'posts': posts})
+    return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
 
 def view_post(request, post_id):
     post = Post.objects.get(post_id=post_id)
