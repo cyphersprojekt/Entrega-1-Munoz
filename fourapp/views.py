@@ -1,12 +1,11 @@
 from django.shortcuts import redirect, render
-from django.db import connection
 from .models import Category, Post, Reply
-from .forms import PostForm
-from .functions import clear_posts
+#from .functions import clear_posts
 
 # Create your views here.
 
 def index(request):
+    #clear_posts()
     return render(request, 'index.html', {'categories': Category.objects.all()})
 
 def image(request, image_id):
@@ -52,6 +51,19 @@ def post_from_category(request, short):
     else:
         return render(request, 'post_from_category.html', {'category': Category.objects.get(short=short)})
 
+def reply(request, post_id):
+    if request.method == 'POST':
+        username = request.POST['username']
+        content = request.POST['content']
+        try:
+            image = request.FILES['image']
+        except:
+            image = None
+        post = Post.objects.get(post_id=post_id)
+        reply = Reply(username=username, content=content, image=image, post=post)
+        reply.save()
+        return redirect(f'/post/{post_id}')
+
 def view_category_by_id(request, category_id):
     category = Category.objects.get(categoryid=category_id)
     categories = Category.objects.all()
@@ -68,17 +80,3 @@ def view_post(request, post_id):
     post = Post.objects.get(post_id=post_id)
     replies = Reply.objects.filter(post=post).order_by('-reply_id')
     return render(request, 'view_post.html', {'post': post, 'replies': replies})
-
-def reply(request, post_id):
-    if request.method == 'POST':
-        username = request.POST['username']
-        content = request.POST['content']
-        try:
-            image = request.FILES['image']
-        except:
-            image = None
-        post = Post.objects.get(post_id=post_id)
-        reply = Reply(username=username, content=content, image=image, post=post)
-        reply.save()
-        return redirect(f'/post/{post_id}')
-

@@ -1,6 +1,4 @@
-from asyncio.windows_events import NULL
-from email.mime import image
-from django.db import models, connection
+from django.db import models
 
 # Create your models here.
 
