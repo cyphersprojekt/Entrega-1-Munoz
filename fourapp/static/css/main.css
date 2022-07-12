@@ -1,0 +1,103 @@
+body {
+    background-color: #ecaaaa;
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    min-height: auto;
+
+}
+
+.newPostForm {
+
+}
+
+.textInput {
+    background-color: #c2fbff;
+}
+
+.form-control-file {
+    
+}
+
+.selectCategory {
+    background-color: #c2fbff;
+}
+
+.boardsTitle {
+    border-style: round;
+}
+
+.listCategories {
+
+}
+
+.listCategoriesFullNameTD {
+
+}
+
+.allCategories {
+
+}
+
+.siteLinks {
+
+}
+
+.goBack {
+
+}
+
+.categoryTitle {
+
+}
+
+.postContainer {
+
+}
+
+.postTable {
+
+}
+
+.postTableTitle {
+
+}
+
+.postTableDetails {
+
+}
+
+.postTableUser {
+
+}
+
+.postTableContent {
+
+}
+
+.postTableImage {
+
+}
+
+.postReply {
+
+}
+
+.replyContainer {
+
+}
+
+.replyTable {
+
+}
+
+.replyTableDetails {
+
+}
+
+.replyTableContent {
+
+}
+

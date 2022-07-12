@@ -1,20 +1,23 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <title>4jango</title>
 </head>
 <body>
 
-    <div class="newPostForm">
+    <div class="newPostForm center-screen">
     <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" >
-        <textarea name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
-        <textarea name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
-        <textarea name="content" rows="5" cols="40" placeholder="content"></textarea><br>
-        <input class="form-control-file"type="file" name="image" placeholder="image" accept="image/*"><br>        
-            <select name="category">
+        <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
+        <textarea class="textInput" name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
+        <textarea class="textInput" name="content" rows="5" cols="40" placeholder="content"></textarea><br>
+        <input class="form-control-file" type="file" name="image" placeholder="image" accept="image/*"><br>        
+            <select class="selectCategory"name="category">
                 {% for category in categories %}
                 <option value="{{ category.categoryid }}">{{ category.name }}</option>
                 {% endfor %}
@@ -24,14 +27,10 @@
     </div>
 
     <div>
-        <table class="listCategories">
-            <tr>
-                <th class="listCategoriesShortNameTH">Short name</th>
-                <th class="listCategoriesFullNameTH">Name</th>
-            </tr>
+        <h3 class="boardsTitle center-screen">Boards</h3>
+        <table class="listCategories center-screen">
             {% for category in categories %}
             <tr>
-                <td class="listCategoriesShortNameTD"><a href="/{{category.short}}">{{ category.short }}</a></td>
                 <td class="listCategoriesFullNameTD"><a href="/{{category.short}}">{{ category.name }}</a></td>
             </tr>
             {% endfor %}
