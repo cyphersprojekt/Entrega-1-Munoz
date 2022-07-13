@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 #from .functions import clear_posts
@@ -77,6 +78,8 @@ def view_category_by_short(request, short):
     return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
 
 def view_post(request, post_id):
+    categories = Category.objects.all()
+    category = Post.objects.get(post_id=post_id).category
     post = Post.objects.get(post_id=post_id)
     replies = Reply.objects.filter(post=post).order_by('-reply_id')
-    return render(request, 'view_post.html', {'post': post, 'replies': replies})
+    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category})

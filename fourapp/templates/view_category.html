@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,23 +10,27 @@
 </head>
 <body>
 
-    <div class="allCategories">
+    <div class="allCategories center-screen">
         {% for entry in categories %}
-        <a href="/{{ entry.short }}">{{ entry.short }}</a>
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
         {% endfor %}
     </div>
 
     <div class="siteLinks">
-        <a class="goBack" href="/">Home</a>
+        <a class="goBack" href="/">Home</a><br>
+        <a class="aboutUs" href="/about">About</a>
     </div>
-    
-    <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
-
-    <div class="newPostForm">
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
+        <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
+    </div>
+    <br>
+    <div class="newPostForm center-screen">
         <form class="form-group" action="/{{ category.short }}/post" method="post" enctype="multipart/form-data" >
-            <textarea name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
-            <textarea name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
-            <textarea name="content" rows="5" cols="40" placeholder="content"></textarea><br>
+            <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
+            <textarea class="textInput" name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
+            <textarea class="textInput" name="content" rows="5" cols="40" placeholder="content"></textarea><br>
             <input class="form-control-file"type="file" name="image" placeholder="image" accept="image/*"><br>       
             <input type="submit" value="Submit"><br>
         </form>

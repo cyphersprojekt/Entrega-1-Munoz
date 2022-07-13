@@ -11,8 +11,23 @@
 </head>
 <body>
 
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
+
+    <div class="siteLinks">
+        <a class="goBack" href="/">Home</a><br>
+        <a class="aboutUs" href="/about">About</a>
+    </div>
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <br>
     <div class="newPostForm center-screen">
-    <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" >
+    <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" nullabl>
         <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
         <textarea class="textInput" name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
         <textarea class="textInput" name="content" rows="5" cols="40" placeholder="content"></textarea><br>

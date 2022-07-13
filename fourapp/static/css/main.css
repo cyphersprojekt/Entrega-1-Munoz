@@ -1,24 +1,21 @@
+@font-face {
+    font-family: 'noto-semi';
+    src: url(../svg/noto-semi.ttf) format('truetype');
+}
+
 body {
     background-color: #ecaaaa;
+    font-family: 'noto-semi';
 }
 
 .center-screen {
     display: flex;
     justify-content: center;
     min-height: auto;
-
-}
-
-.newPostForm {
-
 }
 
 .textInput {
     background-color: #c2fbff;
-}
-
-.form-control-file {
-    
 }
 
 .selectCategory {
@@ -28,76 +25,3 @@ body {
 .boardsTitle {
     border-style: round;
 }
-
-.listCategories {
-
-}
-
-.listCategoriesFullNameTD {
-
-}
-
-.allCategories {
-
-}
-
-.siteLinks {
-
-}
-
-.goBack {
-
-}
-
-.categoryTitle {
-
-}
-
-.postContainer {
-
-}
-
-.postTable {
-
-}
-
-.postTableTitle {
-
-}
-
-.postTableDetails {
-
-}
-
-.postTableUser {
-
-}
-
-.postTableContent {
-
-}
-
-.postTableImage {
-
-}
-
-.postReply {
-
-}
-
-.replyContainer {
-
-}
-
-.replyTable {
-
-}
-
-.replyTableDetails {
-
-}
-
-.replyTableContent {
-
-}
-

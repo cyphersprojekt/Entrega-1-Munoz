@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +9,22 @@
     <title>4jango #{{ post.post_id }}</title>
 </head>
 <body>
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
 
+    <div class="siteLinks">
+        <a class="goBack" href="/">Home</a><br>
+        <a class="aboutUs" href="/about">About</a>
+    </div>
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
+        <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
+    </div>
+    <br>
     <div class="postContainer">
         <table class="postTable">
             <tr>
@@ -35,8 +51,8 @@
     <div class="postReply">
         <h3>Reply</h3>
         <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
-            <textarea name="username" rows="1" cols="40" placeholder="username"></textarea><br>
-            <textarea name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
+            <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username"></textarea><br>
+            <textarea class="textInput" name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
             <input class="form-control-file" type="file" name="image" id="image" accept="image/*">
             <input type="submit" value="Reply">
         </form>
