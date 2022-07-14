@@ -8,6 +8,40 @@ body {
     font-family: 'noto-semi';
 }
 
+.postContainer {
+    margin: auto;
+    width: auto;
+    background-color: rgb(247, 221, 221);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.postReply {
+    margin: auto;
+    width: auto;
+    background-color: rgb(250, 216, 216);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.replyContainer {
+    margin: auto;
+    width: auto;
+    background-color: rgb(245, 206, 206);
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.categoryTitle {
+    margin: auto;
+    width: auto;
+    padding: auto;
+    margin: auto;
+}
+
 .center-screen {
     display: flex;
     justify-content: center;

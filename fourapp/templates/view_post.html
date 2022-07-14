@@ -20,12 +20,12 @@
         <a class="goBack" href="/">Home</a><br>
         <a class="aboutUs" href="/about">About</a>
     </div>
-    <br>
+
     <div class="center-screen">
         <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
         <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
     </div>
-    <br>
+
     <div class="postContainer">
         <table class="postTable">
             <tr>
@@ -43,7 +43,7 @@
             <tr>
                 <td class="postTableContent"><p>{{ post.content }}</p></td>
                 {% if post.image %}
-                <td class="postTableImage"><a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}"></a></td>
+                <td class="postTableImage"><a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}" loading="lazy"></a></td>
                 {% endif %}
             </tr>
         </table>
@@ -59,8 +59,9 @@
         </form>
     </div>
 
-    <h3>Replies</h3>
+
     <div class="replyContainer">
+        <h3>Replies</h3>
         {% for reply in replies %}
         <table class="replyTable">
             <tr>

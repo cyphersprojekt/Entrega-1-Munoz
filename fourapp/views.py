@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 #from .functions import clear_posts
