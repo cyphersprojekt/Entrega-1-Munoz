@@ -16,6 +16,7 @@ class Category(models.Model):
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255, null=False, blank=False, default='anon')
+    registereduser = models.ForeignKey('auth.User', related_name='posts', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, null=False)
     content = models.TextField(null=False, blank=False)
     image = models.ImageField(upload_to='postimgs/', null=True, blank=True)
@@ -28,6 +29,7 @@ class Reply(models.Model):
     reply_id = models.AutoField(primary_key=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     username = models.CharField(max_length=255, null=False, blank=False, default='anon')
+    registereduser = models.ForeignKey('auth.User', related_name='replies', on_delete=models.CASCADE, null=True)
     content = models.TextField(null=False, blank=False)
     image = models.ImageField(upload_to='replyimgs/', null=True, blank=True)
     reply_date = models.DateTimeField(auto_now_add=True)

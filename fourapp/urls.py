@@ -27,4 +27,6 @@ urlpatterns = [
     path('post/<int:post_id>', views.view_post, name='view_post'), #ver el post por id {/post/1}
     path('post/<int:post_id>/reply', views.reply, name='reply'), #crear una respuesta al post {/post/1/reply}
     path('<str:short>/post', views.post_from_category, name='post_from_category'), #crear un post directamente desde dentro de la categoria {/sci/post}
+    path('register/', views.register, name='register'), #crear un usuario {/register}
+    path('login/', views.login, name='login'), #login {/login}
 ]

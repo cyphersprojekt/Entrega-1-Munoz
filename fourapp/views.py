@@ -1,8 +1,23 @@
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
+from .forms import RegisterForm
+from django.contrib.auth.forms import UserCreationForm
 #from .functions import clear_posts
 
 # Create your views here.
+
+
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    return render(request, 'register.html', {'form': form})
+
+def login(request):
+    return render(request, 'login.html')
 
 def index(request):
     #clear_posts()
