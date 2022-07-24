@@ -20,7 +20,14 @@
 
     <div class="siteLinks">
         <a class="goBack" href="{% url 'index' %}">Home</a><br>
-        <a class="aboutUs" href="{% url 'about' %}">About</a>
+        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
+        {% if user.is_authenticated %}
+        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
+        {% else %}
+        <a class="login" href="{% url 'login' %}">Login</a><br>
+        <a class="register" href="{% url 'register' %}">Register</a>
+        {% endif %}
     </div>
     <br>
     <div class="center-screen">

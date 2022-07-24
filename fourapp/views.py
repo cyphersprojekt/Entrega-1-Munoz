@@ -175,4 +175,4 @@ def about(request):
 def view_user(request):
     user = request.user
     posts = Post.objects.filter(registereduser=user).order_by('-post_id')
-    return render(request, 'view_user.html', {'user': user, 'posts': posts})
+    return render(request, 'view_user.html', {'user': user, 'posts': posts, 'categories': Category.objects.all()})

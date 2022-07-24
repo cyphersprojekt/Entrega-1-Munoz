@@ -29,7 +29,7 @@
 * [ ] Uso de minimo un mixin en una CBV y un decorador en una view comun
 * [x] Adaptar template y vista cuando manejemos imagenes
 * [x] Un home
-* [ ] Un 'acerca de nosotros' en el path 'about/'
+* [x] Un 'acerca de nosotros' en el path 'about/'
 * [x] (2/3) 1 clase de post/blog/page con titulo, subtitulo, contenido // falta subtitulo
 * [x] (1/2) Acceso a una vista de listado de objetos con info minima de cada uno y que contenga un buscado por el titulo // falta buscador
 * [ ] En el listado deberia aparecer un cartel que diga que no hay objetos creados o que la busqueda no encontro ningun resultado con los datos proporcionados

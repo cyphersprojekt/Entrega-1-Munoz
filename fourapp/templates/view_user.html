@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>4jango</title>
+    <link rel="icon" href="{% static 'images/favicon32.ico' %}">
+</head>
+<body>
+
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
+
+    <div class="siteLinks">
+        <a class="goBack" href="{% url 'index' %}">Home</a><br>
+        <a class="aboutUs" href="{% url 'about' %}">About</a>
+    </div>
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <br>
+    <h2 class="center-screen">Post something, {{ user.username }}!</h2>
+    <div class="newPostForm center-screen">
+    <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" nullabl>
+        <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
+        <textarea class="textInput" name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
+        <textarea class="textInput" name="content" rows="5" cols="40" placeholder="content"></textarea><br>
+        <input class="form-control-file" type="file" name="image" placeholder="image" accept="image/*"><br>        
+            <select class="selectCategory"name="category">
+                {% for category in categories %}
+                <option value="{{ category.categoryid }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>        
+        <input type="submit" value="Submit"><br>
+    </form>
+    </div>

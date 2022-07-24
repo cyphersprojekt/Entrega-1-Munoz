@@ -18,11 +18,21 @@
 
     <div class="siteLinks">
         <a class="goBack" href="{% url 'index' %}">Home</a><br>
-        <a class="aboutUs" href="{% url 'about' %}">About</a>
+        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
+        {% if user.is_authenticated %}
+        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
+        {% else %}
+        <a class="login" href="{% url 'login' %}">Login</a><br>
+        <a class="register" href="{% url 'register' %}">Register</a>
+        {% endif %}
     </div>
 
+
     <div class="center-screen">
-        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <div class="center-screen">
         <h1 class="categoryTitle">{{ category.short }} - {{ category.name }}</h1>
     </div>
 
