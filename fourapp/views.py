@@ -71,9 +71,6 @@ def new_post(request):
         post = Post(registereduser=registered_user, username=username, title=title, \
                     content=content, image=image, \
                     category=Category.objects.get(categoryid=category))
-        
-
-        print(post)
         post.save()
         return redirect('/')
 
@@ -130,11 +127,14 @@ def view_post(request, post_id):
     category = Post.objects.get(post_id=post_id).category
     post = Post.objects.get(post_id=post_id)
     replies = Reply.objects.filter(post=post).order_by('-reply_id')
+    replycounter = Reply.objects.filter(post_id=post_id).count()
+    post.viewcounter = post.viewcounter + 1
+    post.save()
     if request.user == post.registereduser:
         editable = True
     else:
         editable = False
-    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable})
+    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable, 'replycounter': replycounter, 'viewcounter': post.viewcounter, 'replycounter': replycounter})
 
 @login_required(login_url='/login/')
 def edit_post(request, post_id):

@@ -43,6 +43,8 @@
             <tr>
                 <td class="postTableDetails"><p><small>#{{ post.post_id }}</small></p></td>
                 <td class="postTableDetails"><p><small>{{ post.post_date }}</small></p></td>
+                <td class="postTableDetails"><p><small>{{ post.viewcounter }} Views</small></p></td>
+                <td class="postTableDetails"><p><small>{{ replycounter }} Replies</small></p></td>
             </tr>
             {% if post.edited %}
             <tr>

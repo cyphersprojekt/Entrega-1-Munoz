@@ -22,6 +22,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='postimgs/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     edited = models.BooleanField(default=False)
+    viewcounter = models.IntegerField(default=0)
     post_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.title
