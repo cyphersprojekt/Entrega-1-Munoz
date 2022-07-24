@@ -1,37 +1,44 @@
-import imp
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 #from .functions import clear_posts
 
 # Create your views here.
 
 
 def register_page(request):
-    form = RegisterForm()
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'User successfully created!')
-            return redirect('login')
-    return render(request, 'register.html', {'form': form})
+    if request.user.is_authenticated:
+        return redirect('/')
+    else:
+        form = RegisterForm()
+        if request.method == 'POST':
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'User successfully created!')
+                return redirect('login')
+        return render(request, 'register.html', {'form': form})
 
 def login_page(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user != None:
-            login(request, user)
-            return redirect('/')
-        else:
-            messages.error(request, 'Invalid username or password')
-            return redirect('login')
-    return render(request, 'login.html')
+    if request.user.is_authenticated:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, \
+                                        password=password)
+            if user != None:
+                login(request, user)
+                return redirect('/')
+            else:
+                messages.error(request, 'Invalid username or password')
+                return redirect('login')
+        return render(request, 'login.html')
 
 def logout_page(request):
     logout(request)
@@ -62,8 +69,8 @@ def new_post(request):
         if request.user.is_authenticated:
             registered_user = request.user
         post = Post(registereduser=registered_user, username=username, title=title, \
-        content=content, image=image, \
-        category=Category.objects.get(categoryid=category))
+                    content=content, image=image, \
+                    category=Category.objects.get(categoryid=category))
         
 
         print(post)
@@ -101,7 +108,8 @@ def reply(request, post_id):
         if request.user.is_authenticated:
             registered_user = request.user
         post = Post.objects.get(post_id=post_id)
-        reply = Reply(registereduser=registered_user, username=username, content=content, image=image, post=post)
+        reply = Reply(registereduser=registered_user, username=username, \
+                    content=content, image=image, post=post)
         reply.save()
         return redirect(f'/post/{post_id}')
 
@@ -122,4 +130,25 @@ def view_post(request, post_id):
     category = Post.objects.get(post_id=post_id).category
     post = Post.objects.get(post_id=post_id)
     replies = Reply.objects.filter(post=post).order_by('-reply_id')
-    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category})
+    if request.user == post.registereduser:
+        editable = True
+    else:
+        editable = False
+    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable})
+
+@login_required(login_url='/login/')
+def edit_post(request, post_id):
+    post = Post.objects.get(post_id=post_id)
+    if request.method == 'POST':
+        if post.registereduser == request.user:
+            post.title = request.POST['title']
+            post.content = request.POST['content']
+            post.image = request.FILES['image']
+            post.edited = True
+            post.save()
+            return redirect(f'/post/{post_id}')
+        else:
+            messages.error(request, 'You are not the owner of this post')
+            return redirect(f'/post/{post_id}')
+    else:
+        return render(request, 'edit_post.html', {'post': post})

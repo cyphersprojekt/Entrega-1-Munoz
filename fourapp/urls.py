@@ -30,4 +30,5 @@ urlpatterns = [
     path('register/', views.register_page, name='register'), #crear un usuario {/register}
     path('login/', views.login_page, name='login'), #login {/login}
     path('logout/', views.logout_page, name='logout'), #logout {/logout}
+    path('edit/<int:post_id>', views.edit_post, name='edit_post'), #editar un post {/edit/1}
 ]
