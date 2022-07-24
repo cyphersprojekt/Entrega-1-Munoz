@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -132,9 +131,11 @@ def view_post(request, post_id):
     post.save()
     if request.user == post.registereduser:
         editable = True
+        deletable = True
     else:
         editable = False
-    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable, 'replycounter': replycounter, 'viewcounter': post.viewcounter, 'replycounter': replycounter})
+        deletable = False
+    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable, 'replycounter': replycounter, 'viewcounter': post.viewcounter, 'replycounter': replycounter, 'deletable': deletable})
 
 @login_required(login_url='/login/')
 def edit_post(request, post_id):
@@ -152,3 +153,16 @@ def edit_post(request, post_id):
             return redirect(f'/post/{post_id}')
     else:
         return render(request, 'edit_post.html', {'post': post})
+
+@login_required(login_url='/login/')
+def delete_post(request, post_id):
+    post = Post.objects.get(post_id=post_id)
+    if request.method == 'POST':
+        if post.registereduser == request.user:
+            post.delete()
+            return redirect('/')
+        else:
+            messages.error(request, 'You are not the owner of this post')
+            return redirect(f'/post/{post_id}')
+    else:
+        return render(request, 'delete_post.html', {'post': post})

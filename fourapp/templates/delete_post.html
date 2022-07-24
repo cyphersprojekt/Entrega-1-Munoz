@@ -37,15 +37,8 @@
                     <td class="postTableEdit">
                     <a href="/edit/{{ post.post_id }}">Edit</a>
                     </td>
-                </tr>
                 {% endif %}
-                {% if deletable %}
-                <tr>
-                    <td class="postTableDelete">
-                    <a href="/delete/{{ post.post_id }}">Delete</a>
-                    </td>
                 </tr>
-                {% endif %}
             </tr>
             <tr>
                 <td class="postTableDetails"><p><small>#{{ post.post_id }}</small></p></td>
@@ -69,34 +62,11 @@
         </table>
     </div>
 
-    <div class="postReply">
-        <h3>Reply</h3>
-        <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
-            <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username"></textarea><br>
-            <textarea class="textInput" name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
-            <input class="form-control-file" type="file" name="image" id="image" accept="image/*">
-            <input type="submit" value="Reply">
+    <div class="postDeletion">
+        <p class="dangerZone"> Are you ABSOLUTELY sure you want to delete this post? THIS ACTION CAN NOT BE UNDONE!!!!</p>
+        <form action="/delete/{{ post.post_id }}" method="post">
+            <input type="submit" value="Yes, delete.">
         </form>
     </div>
-
-
-    <div class="replyContainer">
-        <h3>Replies</h3>
-        {% for reply in replies %}
-        <table class="replyTable">
-            <tr>
-                <td class="replyTableDetails"><p>{{ reply.username }}</p></td>
-                <td class="replyTableDetails"><p>{{ reply.reply_date }}</p></td>
-            </tr>
-            <tr>
-                <td class="replyTableContent"><p>{{ reply.content }}</p></td>
-                {% if reply.image %}
-                <td class="replyTableContent"><a href="../media/{{ reply.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ reply.image }}"></a></td>
-                {% endif %}
-            </tr>
-        </table>
-        {% endfor %}
-    </div>
-
 </body>
-</html>
+    
