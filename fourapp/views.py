@@ -1,23 +1,41 @@
+import imp
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 #from .functions import clear_posts
 
 # Create your views here.
 
 
-def register(request):
+def register_page(request):
     form = RegisterForm()
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'User successfully created!')
             return redirect('login')
     return render(request, 'register.html', {'form': form})
 
-def login(request):
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user != None:
+            login(request, user)
+            return redirect('/')
+        else:
+            messages.error(request, 'Invalid username or password')
+            return redirect('login')
     return render(request, 'login.html')
+
+def logout_page(request):
+    logout(request)
+    return redirect('/')
 
 def index(request):
     #clear_posts()
@@ -41,9 +59,13 @@ def new_post(request):
             image = request.FILES['image']
         except:
             image = None
-        post = Post(username=username, title=title, \
+        if request.user.is_authenticated:
+            registered_user = request.user
+        post = Post(registereduser=registered_user, username=username, title=title, \
         content=content, image=image, \
         category=Category.objects.get(categoryid=category))
+        
+
         print(post)
         post.save()
         return redirect('/')
@@ -58,7 +80,9 @@ def post_from_category(request, short):
             image = request.FILES['image']
         except:
             image = None
-        post = Post(username=username, title=title, \
+        if request.user.is_authenticated:
+            registered_user = request.user
+        post = Post(registereduser=registered_user, username=username, title=title, \
         content=content, image=image, \
         category=category)
         post.save()
@@ -74,8 +98,10 @@ def reply(request, post_id):
             image = request.FILES['image']
         except:
             image = None
+        if request.user.is_authenticated:
+            registered_user = request.user
         post = Post.objects.get(post_id=post_id)
-        reply = Reply(username=username, content=content, image=image, post=post)
+        reply = Reply(registereduser=registered_user, username=username, content=content, image=image, post=post)
         reply.save()
         return redirect(f'/post/{post_id}')
 
