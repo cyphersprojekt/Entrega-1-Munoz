@@ -33,9 +33,9 @@
 * [x] (2/3) 1 clase de post/blog/page con titulo, subtitulo, contenido // falta subtitulo
 * [x] (1/2) Acceso a una vista de listado de objetos con info minima de cada uno y que contenga un buscado por el titulo // falta buscador
 * [ ] En el listado deberia aparecer un cartel que diga que no hay objetos creados o que la busqueda no encontro ningun resultado con los datos proporcionados
-* [x] (3/3) Accesos a vistas para poder crear, editar y borrar un objeto.
+* [x] Accesos a vistas para poder crear, editar y borrar un objeto.
 * [x] Acceso desde el listado a cada post para ver la info completa del mismo
-* [x] (1/2) Tener una app "accounts" para manejar las vistas relacionadas a los usuarios // Lo manejo desde la app principal
+* [x] Tener una app "accounts" para manejar las vistas relacionadas a los usuarios // Lo manejo desde la app principal
 * [x] (2/3) Acceso a una pantalla de registro donde se solicite usuario, email y contraseña // no pido mail POR DISEÑO
 * [x] Acceso a una pantalla de login
 * [ ] Acceso a una pantalla de perfil donde se muestre la informacion del usuario c/ nombre, avatar, descripcion, 1 link, email

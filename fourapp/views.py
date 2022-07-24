@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user
 from django.contrib.auth.decorators import login_required
 #from .functions import clear_posts
 
@@ -166,3 +166,13 @@ def delete_post(request, post_id):
             return redirect(f'/post/{post_id}')
     else:
         return render(request, 'delete_post.html', {'post': post})
+
+def about(request):
+    categories = Category.objects.all()
+    return render(request, 'about.html', {'categories': categories})
+
+@login_required(login_url='/login/')
+def view_user(request):
+    user = request.user
+    posts = Post.objects.filter(registereduser=user).order_by('-post_id')
+    return render(request, 'view_user.html', {'user': user, 'posts': posts})

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>4jango #{{ post.post_id }}</title>
+    <link rel="icon" href="{% static 'images/favicon32.ico' %}">
+</head>
+<body>
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
+
+    <div class="siteLinks">
+        <a class="goBack" href="{% url 'index' %}">Home</a><br>
+        <a class="aboutUs" href="{% url 'about' %}">About</a>
+    </div>
+
+    <div class="aboutUs">
+
+        <h3> 4jango - A django powered 4chan style website. </h3>
+        <p> Python course number 31085, Coderhouse.</p>
+        <p> Team members: <b>Ignacio Munoz</b>, Jeronimo Coelho, Ignacio Caputo.</p>
+        <p> Designed by and developed by: <b>Ignacio Munoz</b></p>
+
+    </div>
