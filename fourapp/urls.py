@@ -34,4 +34,5 @@ urlpatterns = [
     path('delete/<int:post_id>', views.delete_post, name='delete_post'), #eliminar un post {/delete/1}
     path('about/', views.about, name='about'), #about {/about}
     path('user/', views.view_user, name='user'), #ver el perfil del usuario {/user}
+    path('user/edit', views.edit, name='edit_user'), #editar el perfil del usuario {/user/edit}
 ]

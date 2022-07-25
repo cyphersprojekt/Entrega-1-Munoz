@@ -20,7 +20,14 @@
 
     <div class="siteLinks">
         <a class="goBack" href="{% url 'index' %}">Home</a><br>
-        <a class="aboutUs" href="{% url 'about' %}">About</a>
+        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
+        {% if user.is_authenticated %}
+        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
+        {% else %}
+        <a class="login" href="{% url 'login' %}">Login</a><br>
+        <a class="register" href="{% url 'register' %}">Register</a>
+        {% endif %}
     </div>
     <br>
     <div class="center-screen">
@@ -42,3 +49,16 @@
         <input type="submit" value="Submit"><br>
     </form>
     </div>
+
+    <div class="postContainer">
+        <h3>All my posts</h3>
+        {% for post in posts %}
+        <div class="post">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <img src="{% static 'images/' ~ post.image %}" alt="post image" class="postImage" width="50%" height="50%">
+            <p>{{ post.username }}</p>
+            <p>{{ post.category }}</p>
+            <p>{{ post.date }}</p>
+        </div>
+        {% endfor %}

@@ -38,8 +38,8 @@
 * [x] Tener una app "accounts" para manejar las vistas relacionadas a los usuarios // Lo manejo desde la app principal
 * [x] (2/3) Acceso a una pantalla de registro donde se solicite usuario, email y contraseña // no pido mail POR DISEÑO
 * [x] Acceso a una pantalla de login
-* [ ] Acceso a una pantalla de perfil donde se muestre la informacion del usuario c/ nombre, avatar, descripcion, 1 link, email
-* [ ] Acceso a una pantalla para que el usuario pueda modificar su informacion
+* [x] Acceso a una pantalla de perfil donde se muestre la informacion del usuario c/ nombre, avatar, descripcion, 1 link, email
+* [x] (1/2) Acceso a una pantalla para que el usuario pueda modificar su informacion // Estan los metodos, falta html
 * [x] Apartado admin/ con toda la configuracion posible desde este apartado
 * [ ] App de mensajeria entre usuarios
 * [ ] Probar antes de hacer commits y no subir boludeces a github // fallé tremendamente en este

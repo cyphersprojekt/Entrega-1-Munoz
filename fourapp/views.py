@@ -176,3 +176,48 @@ def view_user(request):
     user = request.user
     posts = Post.objects.filter(registereduser=user).order_by('-post_id')
     return render(request, 'view_user.html', {'user': user, 'posts': posts, 'categories': Category.objects.all()})
+
+@login_required(login_url='/login/')
+def edit_user(request):
+    user = request.user
+    if request.method == 'POST':
+        if request.POST['password'] == user.password:
+            user.username = request.POST['username']
+            user.save()
+            return redirect('/user')
+        else:
+            messages.error(request, 'Wrong password')
+            return redirect('/user')
+    else:
+        return render(request, 'edit_user.html', {'user': user})
+
+@login_required(login_url='/login/')
+def change_pwd(request):
+    user = request.user
+    if request.method == 'POST':
+        if request.POST['password'] == user.password:
+            if request.POST['new_password'] == request.POST['new_password_confirm']:
+                user.password = request.POST['new_password']
+                user.save()
+                return redirect('/user')
+            else:
+                messages.error(request, 'New passwords do not match')
+                return redirect('/user')
+        else:
+            messages.error(request, 'Wrong password')
+            return redirect('/user')
+    else:
+        return render(request, 'edit_user.html', {'user': user})
+
+@login_required(login_url='/login/')
+def delete_user(request):
+    user = request.user
+    if request.method == 'POST':
+        if request.POST['password'] == user.password:
+            user.delete()
+            return redirect('/')
+        else:
+            messages.error(request, 'Wrong password')
+            return redirect('/user')
+    else:
+        return render(request, 'edit_user.html', {'user': user})
