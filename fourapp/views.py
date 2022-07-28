@@ -268,3 +268,12 @@ def settings(request):
         return delete_account(request)
     else:
         return redirect('/user/settings')
+
+def search(request):
+    categories = Category.objects.all()
+    if request.method == 'GET':
+        return render(request, 'search.html', {'categories': categories})
+    else:
+        search_query = request.POST['search_query']
+        posts = Post.objects.filter(title__icontains=search_query)
+        return render(request, 'search.html', {'posts': posts, 'categories': categories})

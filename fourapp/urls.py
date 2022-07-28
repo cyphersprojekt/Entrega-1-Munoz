@@ -35,4 +35,5 @@ urlpatterns = [
     path('about/', views.about, name='about'), #about {/about}
     path('user/', views.view_user, name='user'), #ver el perfil del usuario {/user}
     path('user/settings/', views.settings, name='settings'), #editar el perfil del usuario {/user/edit}
+    path('search/', views.search, name='search'), #buscar un post {/search}
 ]
