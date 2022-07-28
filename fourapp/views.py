@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_user
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 #from .functions import clear_posts
 
@@ -157,8 +159,10 @@ def edit_post(request, post_id):
 @login_required(login_url='/login/')
 def delete_post(request, post_id):
     post = Post.objects.get(post_id=post_id)
+    replies = Reply.objects.filter(post=post)
     if request.method == 'POST':
         if post.registereduser == request.user:
+            replies.delete()
             post.delete()
             return redirect('/')
         else:
@@ -178,46 +182,83 @@ def view_user(request):
     return render(request, 'view_user.html', {'user': user, 'posts': posts, 'categories': Category.objects.all()})
 
 @login_required(login_url='/login/')
-def edit_user(request):
+def settings(request):
     user = request.user
-    if request.method == 'POST':
-        if request.POST['password'] == user.password:
-            user.username = request.POST['username']
-            user.save()
-            return redirect('/user')
-        else:
-            messages.error(request, 'Wrong password')
-            return redirect('/user')
-    else:
-        return render(request, 'edit_user.html', {'user': user})
+    if request.method == 'GET':
+        return render(request, 'settings.html', {'user': user, 'categories': Category.objects.all()})
 
-@login_required(login_url='/login/')
-def change_pwd(request):
-    user = request.user
-    if request.method == 'POST':
-        if request.POST['password'] == user.password:
-            if request.POST['new_password'] == request.POST['new_password_confirm']:
-                user.password = request.POST['new_password']
-                user.save()
-                return redirect('/user')
+    def change_username(request):
+        user = request.user
+        if request.POST['username'] != '':
+            if request.POST['username'] != user.username:
+                if check_password(request.POST['password'], user.password):
+                    user.username = request.POST['username']
+                    user.save()
+                    messages.success(request, 'Username changed')
+                    return redirect('/user/settings')
+                else:
+                    messages.error(request, 'Wrong password when changing username')
+                    return redirect('/user/settings')
             else:
-                messages.error(request, 'New passwords do not match')
-                return redirect('/user')
+                messages.error(request, 'Can\'t change to the same username')
+                return redirect('/user/settings')
         else:
-            messages.error(request, 'Wrong password')
-            return redirect('/user')
-    else:
-        return render(request, 'edit_user.html', {'user': user})
+            messages.error(request, 'Username can\'t be empty')
+            return redirect('/user/settings')
 
-@login_required(login_url='/login/')
-def delete_user(request):
-    user = request.user
-    if request.method == 'POST':
-        if request.POST['password'] == user.password:
-            user.delete()
-            return redirect('/')
+    def change_password(request):
+        user = request.user
+        if request.POST.get('new_password') != '':
+            if check_password(request.POST.get('oldpassword'), user.password):
+                if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
+                    user.password = make_password(request.POST.get('newpassword1'))
+                    user.save()
+                    messages.success(request, 'Password changed')
+                    return redirect('/user/settings')
+                else:
+                    messages.error(request, 'Passwords don\'t match')
+                    return redirect('/user/settings')
+            else:
+                messages.error(request, 'Wrong password when changing password')
+                return redirect('/user/settings')
         else:
-            messages.error(request, 'Wrong password')
-            return redirect('/user')
+            messages.error(request, 'Password can\'t be empty')
+            return redirect('/user/settings')
+
+    def delete_posts(request):
+        user = request.user
+        if request.method == 'POST':
+            if check_password(request.POST.get('password'), user.password):
+                post = Post.objects.filter(registereduser=user).all()
+                post.delete()
+                messages.success(request, 'All posts deleted')
+                return redirect('/user/settings')
+            else:
+                messages.error(request, 'Wrong password when deleting posts')
+                return redirect('/user/settings')
+        else:
+            return redirect('/user/settings')
+
+    def delete_account(request):
+        user = request.user
+        if request.method == 'POST':
+            if check_password(request.POST.get('password'), user.password):
+                user.delete()
+                messages.success(request, 'Account deleted')
+                return redirect('/')
+            else:
+                messages.error(request, 'Wrong password')
+                return redirect('/user/settings')
+        else:
+            return redirect('/user/settings')
+
+    if request.POST['form_type'] == 'change_username':
+        return change_username(request)
+    elif request.POST['form_type'] == 'change_password':
+        return change_password(request)
+    elif request.POST['form_type'] == 'delete_posts':
+        return delete_posts(request)
+    elif request.POST['form_type'] == 'delete_account':
+        return delete_account(request)
     else:
-        return render(request, 'edit_user.html', {'user': user})
+        return redirect('/user/settings')

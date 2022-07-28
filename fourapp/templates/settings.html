@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>4jango</title>
+    <link rel="icon" href="{% static 'images/favicon32.ico' %}">
+</head>
+<body>
+
+
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
+
+    <div class="siteLinks">
+        <a class="goBack" href="{% url 'index' %}">Home</a><br>
+        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
+        {% if user.is_authenticated %}
+        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="settings" href="{% url 'settings' %}">Settings</a><br>
+        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
+        {% else %}
+        <a class="login" href="{% url 'login' %}">Login</a><br>
+        <a class="register" href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+    <br>
+    {% for message in messages %}
+    <div class="center-screen">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+    <br>
+
+    <div>
+        <h3 class="center-screen">What do you want to do, {{ user.username }}?</h3>
+    </div>
+
+    <div>        
+        <div class="postContainer">
+            <h4 class ="center-screen">Change my username</h4>
+            <form class="center-screen"action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
+                <input class='center-screen'type="text" name="username" placeholder="new username" maxlength="40"><br>
+                <input class='center-screen'type="password" name="password" placeholder="password"><br>
+                <input type="hidden" name="form_type" value="change_username">
+                <input class="center-screen"type="submit" name="edusername"value="Submit"></form>
+        </div>
+
+        <div class="postContainer">
+            <h4 class ="center-screen">Change my password</h4>
+            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
+                <input class='center-screen'type="password" name="oldpassword" placeholder="old password"><br>
+                <input class='center-screen'type="password" name="newpassword1" placeholder="new password"><br>
+                <input class='center-screen'type="password" name="newpassword2" placeholder="confirm new password"><br>
+                <input type="hidden" name="form_type" value="change_password">
+                <input class="center-screen"type="submit" value="Submit"></form>
+        </div>
+
+        <div class="postContainer">
+            <h4 class="center-screen">Delete all my posts</h4>
+            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
+                <input class='center-screen'type="password" name="password" placeholder="password"><br>
+                <input type="hidden" name="form_type" value="delete_posts">
+                <input class="center-screen"type="submit" value="Submit"></form>
+        </div>
+
+        <div class="postContainer">
+            <h4 class="center-screen">Delete my account</h4>
+            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
+                <input class='center-screen'type="password" name="password" placeholder="password"><br>
+                <input type="hidden" name="form_type" value="delete_account">
+                <input class="center-screen"type="submit" value="Submit"></form>
+        </div>
+
+    </div>

@@ -26,7 +26,7 @@
 * [x] Borrar todo codigo que no este en uso (imports, comments innecesarios)
 * [x] No dejar botones y accesos sin funcionalidad
 * [x] Minimo dos clases basadas en vista
-* [ ] Uso de minimo un mixin en una CBV y un decorador en una view comun
+* [x] Uso de minimo un mixin en una CBV y un decorador en una view comun // no se que es mixin ni cbv, pero uso el decorador de loginrequired
 * [x] Adaptar template y vista cuando manejemos imagenes
 * [x] Un home
 * [x] Un 'acerca de nosotros' en el path 'about/'
@@ -36,10 +36,10 @@
 * [x] Accesos a vistas para poder crear, editar y borrar un objeto.
 * [x] Acceso desde el listado a cada post para ver la info completa del mismo
 * [x] Tener una app "accounts" para manejar las vistas relacionadas a los usuarios // Lo manejo desde la app principal
-* [x] (2/3) Acceso a una pantalla de registro donde se solicite usuario, email y contraseña // no pido mail POR DISEÑO
+* [x] Acceso a una pantalla de registro donde se solicite usuario, email y contraseña // no pido mail POR DISEÑO
 * [x] Acceso a una pantalla de login
 * [x] Acceso a una pantalla de perfil donde se muestre la informacion del usuario c/ nombre, avatar, descripcion, 1 link, email
-* [x] (1/2) Acceso a una pantalla para que el usuario pueda modificar su informacion // Estan los metodos, falta html
+* [x] Acceso a una pantalla para que el usuario pueda modificar su informacion
 * [x] Apartado admin/ con toda la configuracion posible desde este apartado
 * [ ] App de mensajeria entre usuarios
 * [ ] Probar antes de hacer commits y no subir boludeces a github // fallé tremendamente en este

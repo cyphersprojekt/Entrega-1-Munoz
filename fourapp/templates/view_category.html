@@ -22,6 +22,7 @@
         <a class="aboutUs" href="{% url 'about' %}">About</a><br>
         {% if user.is_authenticated %}
         <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="settings" href="{% url 'settings' %}">Settings</a><br>
         <a class="logout" href="{% url 'logout' %}">Logout</a><br>
         {% else %}
         <a class="login" href="{% url 'login' %}">Login</a><br>
@@ -33,7 +34,7 @@
         <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
         <h1>{{ category.short }} - {{ category.name }}</h1>
     </div>
-
+    <br>
     <div class="newPostForm center-screen">
         <form class="form-group" action="/{{ category.short }}/post" method="post" enctype="multipart/form-data" >
             <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
