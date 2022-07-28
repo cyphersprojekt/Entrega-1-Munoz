@@ -121,7 +121,13 @@ def view_category_by_short(request, short):
     category = Category.objects.get(short=short)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
-    return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
+    if category.nsfw == True:
+        if request.user.is_authenticated:
+            return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
+        else:
+            return redirect('/login/')
+    else:
+        return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
 
 def view_post(request, post_id):
     categories = Category.objects.all()

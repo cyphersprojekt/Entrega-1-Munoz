@@ -9,6 +9,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255, null=False)
     short = models.CharField(max_length=3, null=False, default='sci')
     description = models.TextField(null=True)
+    nsfw = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
