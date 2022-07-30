@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>4jango</title>
+    <link rel="icon" href="{% static 'images/favicon32.ico' %}">
+</head>
+<body>
+
+    <div class="allCategories center-screen">
+        {% for entry in categories %}
+        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
+        {% endfor %}
+    </div>
+
+    <div class="siteLinks">
+        <a class="goBack" href="{% url 'index' %}">Home</a><br>
+        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
+        <a class="Search" href="{% url 'search' %}">Search</a><br>
+        {% if user.is_authenticated %}
+        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
+        <a class="settings" href="{% url 'settings' %}">Settings</a><br>
+        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
+        {% else %}
+        <a class="login" href="{% url 'login' %}">Login</a><br>
+        <a class="register" href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </div>
+    <br>
+    <div class="center-screen">
+        <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
+    </div>
+
+    <h1 class="center-screen">Search for a post by its title, content, or the original poster's username</h1><br>
+    <div class="center-screen">
+        <form action="{% url 'search' %}" method="POST">
+            <input type="text" name="search_query" placeholder="Search...">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    {% if posts %}
+    {% for post in posts %}
+    <div class="postContainer">
+        <table class="postTable">
+            <tr>
+                <td class="postTableTitle">
+                    <a href="/post/{{ post.post_id }}" target="_blank"><h2>{{ post.title }}</h2></a>
+                </td>
+            </tr>
+            <tr>
+                <td class="postTableDetails"><p><small>#{{ post.post_id }}</small></p></td>
+                <td class="postTableDetails"><p><small>{{ post.post_date }}</small></p></td>
+            </tr>
+            <tr>
+                <td class="postTableUser"><h4>{{ post.username }} </h4></td>
+            </tr>
+            <tr>
+                <td class="postTableContent"><p>{{ post.content }}</p></td>
+                {% if post.image %}
+                <td class="postTableImage"><a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}" loading="lazy"></a></td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+    {% endif %}

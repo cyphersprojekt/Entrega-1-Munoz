@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
 from .forms import RegisterForm
@@ -6,9 +5,6 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
-#from .functions import clear_posts
-
-# Create your views here.
 
 
 def register_page(request):
@@ -69,6 +65,8 @@ def new_post(request):
             image = None
         if request.user.is_authenticated:
             registered_user = request.user
+        else:
+            registered_user = None
         post = Post(registereduser=registered_user, username=username, title=title, \
                     content=content, image=image, \
                     category=Category.objects.get(categoryid=category))
@@ -87,6 +85,8 @@ def post_from_category(request, short):
             image = None
         if request.user.is_authenticated:
             registered_user = request.user
+        else:
+            registered_user = None
         post = Post(registereduser=registered_user, username=username, title=title, \
         content=content, image=image, \
         category=category)
@@ -115,7 +115,8 @@ def view_category_by_id(request, category_id):
     category = Category.objects.get(categoryid=category_id)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
-    return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
+    context = {'category': category, 'posts': posts, 'categories': categories}
+    return render(request, 'view_category.html', context)
 
 def view_category_by_short(request, short):
     category = Category.objects.get(short=short)
@@ -143,7 +144,9 @@ def view_post(request, post_id):
     else:
         editable = False
         deletable = False
-    return render(request, 'view_post.html', {'post': post, 'replies': replies, 'categories': categories, 'category': category, 'editable': editable, 'replycounter': replycounter, 'viewcounter': post.viewcounter, 'replycounter': replycounter, 'deletable': deletable})
+
+    context = {'post': post, 'replies': replies, 'category': category, 'categories': categories, 'replycounter': replycounter, 'editable': editable, 'deletable': deletable}
+    return render(request, 'view_post.html', context)
 
 @login_required(login_url='/login/')
 def edit_post(request, post_id):
@@ -275,5 +278,8 @@ def search(request):
         return render(request, 'search.html', {'categories': categories})
     else:
         search_query = request.POST['search_query']
-        posts = Post.objects.filter(title__icontains=search_query)
+        titles = Post.objects.filter(title__icontains=search_query)
+        contents = Post.objects.filter(content__icontains=search_query)
+        usernames = Post.objects.filter(username__icontains=search_query)
+        posts = titles | contents | usernames
         return render(request, 'search.html', {'posts': posts, 'categories': categories})
