@@ -3,9 +3,9 @@
 ### Consignas:
 
 * [x] Link en github
-* [ ] README.md con ubicacion de funcionalidades o pasos a seguir para probar las cosas y los nombres de los integrantes del grupo
+* [x] README.md con ubicacion de funcionalidades o pasos a seguir para probar las cosas y los nombres de los integrantes del grupo
 * [x] Nombre del repo "Entrega1+Apellidos"
-* [ ] Video explicativo de 10 min max (subido en el proyecto o cargado el link al mismo)
+* [x] Video explicativo de 10 min max (subido en el proyecto o cargado el link al mismo)
 * [ ] Herencia implementada en los templates
 * [x] .gitignore con venv, pycache, .sqlite3, media/
 * [x] Existencia del archivo requirements.txt actualizado
@@ -22,7 +22,7 @@
     * db.sqlite3
     * requirements.txt
 * [x] Clases definidas con PascalCase y funciones, paths, esas cosas con snake_case
-* [ ] Uso de un mismo idioma en todo el proyecto (pendiente traducir comentarios)
+* [x] Uso de un mismo idioma en todo el proyecto
 * [x] Borrar todo codigo que no este en uso (imports, comments innecesarios)
 * [x] No dejar botones y accesos sin funcionalidad
 * [x] Minimo dos clases basadas en vista
@@ -30,9 +30,9 @@
 * [x] Adaptar template y vista cuando manejemos imagenes
 * [x] Un home
 * [x] Un 'acerca de nosotros' en el path 'about/'
-* [x] (2/3) 1 clase de post/blog/page con titulo, subtitulo, contenido // falta subtitulo
-* [x] (1/2) Acceso a una vista de listado de objetos con info minima de cada uno y que contenga un buscado por el titulo // falta buscador
-* [ ] En el listado deberia aparecer un cartel que diga que no hay objetos creados o que la busqueda no encontro ningun resultado con los datos proporcionados
+* [x] 1 clase de post/blog/page con titulo, subtitulo, contenido // falta subtitulo
+* [x] Acceso a una vista de listado de objetos con info minima de cada uno y que contenga un buscado por el titulo
+* [x] En el listado deberia aparecer un cartel que diga que no hay objetos creados o que la busqueda no encontro ningun resultado con los datos proporcionados
 * [x] Accesos a vistas para poder crear, editar y borrar un objeto.
 * [x] Acceso desde el listado a cada post para ver la info completa del mismo
 * [x] Tener una app "accounts" para manejar las vistas relacionadas a los usuarios // Lo manejo desde la app principal
@@ -44,3 +44,23 @@
 * [ ] App de mensajeria entre usuarios
 * [ ] Probar antes de hacer commits y no subir boludeces a github // fallé tremendamente en este
 
+# Cómo testear el proyecto:
+* Clonar el repositorio
+* Instalar las dependencias dentro de un entorno virtual con 'pip install -r requirements.txt'
+* Crear una cuenta de usuario con 'python manage.py createsuperuser'
+* Iniciar el servidor con 'python manage.py runserver'
+    * Dentro del panel de administrador, crear como mínimo, una categoría con nombre, nombre corto y descripcion. Opcionalmente crear una segunda categoría para testear el flag 'nsfw'
+    * Estando logueado, crear un post con titulo, contenido, imagen y categoria
+    * Ver la categoría dentro de la que se creo el post
+    * Ver el post dentro de la categoria, actualizar el post para incrementar el contador de visitas
+    * Responder al post con un comentario, ver cómo se incrementa el contador de comentarios
+    * Ver el apartado 'my profile'
+    * Ver el apartado 'settings', testear sus funcionalidades (cambiar usuario, cambiar contraseña, eliminar todos los posts, eliminar cuenta)
+    * Teniendo todavía posts en la db, ver el apartado 'search' y buscarlos ó por una palabra del título, o de su contenido, o el nombre de usuario público de quien lo haya creado
+* Opcionalmente, testear las funcionalidades de posteo y búsqueda estando deslogueado
+    * Ver cómo los posts carecen de botón para editar o para eliminar
+    * Intentar editar o eliminar un post que no sea suyo 'delete/<int:post_id>' ó 'edit/<int:post_id>'
+    * Si la creamos, intentar ver una categoría 'nsfw'. La app redirecciona al login sin hacer uso de decoradores
+    * Testear las pantallas de registro y login
+
+### [Video explicativo](https://youtu.be/GfMHgp4lrAY)

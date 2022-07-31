@@ -68,4 +68,9 @@
         </table>
     </div>
     {% endfor %}
+    {% else %}
+        {% if search_query %}
+        <h1 class="center-screen">No results found for '{{ search_query }}'</h1>
+        {% endif %}
     {% endif %}
+</body>

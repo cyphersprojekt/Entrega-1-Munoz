@@ -105,6 +105,8 @@ def reply(request, post_id):
             image = None
         if request.user.is_authenticated:
             registered_user = request.user
+        else:
+            registered_user = None
         post = Post.objects.get(post_id=post_id)
         reply = Reply(registereduser=registered_user, username=username, \
                     content=content, image=image, post=post)
@@ -155,7 +157,10 @@ def edit_post(request, post_id):
         if post.registereduser == request.user:
             post.title = request.POST['title']
             post.content = request.POST['content']
-            post.image = request.FILES['image']
+            try:
+                post.image = request.FILES['image']
+            except:
+                post.image = None
             post.edited = True
             post.save()
             return redirect(f'/post/{post_id}')
@@ -282,4 +287,4 @@ def search(request):
         contents = Post.objects.filter(content__icontains=search_query)
         usernames = Post.objects.filter(username__icontains=search_query)
         posts = titles | contents | usernames
-        return render(request, 'search.html', {'posts': posts, 'categories': categories})
+        return render(request, 'search.html', {'posts': posts, 'categories': categories, 'search_query': search_query})
