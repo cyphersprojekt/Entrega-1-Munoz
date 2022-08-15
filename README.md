@@ -1,5 +1,21 @@
 # Coderhouse, curso de python #31085
 ## Entrega final
+
+
+### Revisiones:
+* [ ] Herencia en los templates
+* [ ] manage.py duplicado
+* [ ] Clases basadas en vistas y mixin
+* [ ] Advertencia de que no existen categorías cuando recién arrancas la app sin db
+* [ ] RichTextBox con ckeditor
+* [ ] Nombre corto de las categorías como unique
+* [ ] App de accounts
+* [ ] Mail al registro
+* [ ] Perfil de usuario con nombre, avatar, descripcion, link a una pagina, email.
+* [ ] Acceso a una pantalla para que el usuario pueda modificar su informacion. Esta debe permitir modificar los datos nombrados en el punto anterior y, ademas, el password. 
+* [ ] Mensajería 
+
+
 ### Consignas:
 
 * [x] Link en github
