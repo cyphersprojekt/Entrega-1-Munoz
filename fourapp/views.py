@@ -43,6 +43,8 @@ def logout_page(request):
 
 def index(request):
     #clear_posts()
+    if not Category.objects.filter(short='gen').exists():
+        Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
     return render(request, 'index.html', {'categories': Category.objects.all()})
 
 def image(request, image_id):

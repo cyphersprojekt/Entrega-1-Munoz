@@ -54,11 +54,15 @@
     <div>
         <h3 class="boardsTitle center-screen">Boards</h3>
         <table class="listCategories center-screen">
-            {% for category in categories %}
-            <tr>
-                <td class="listCategoriesFullNameTD"><a href="/{{category.short}}">{{ category.name }}</a></td>
-            </tr>
-            {% endfor %}
+            {% if categories %}
+                {% for category in categories %}
+                <tr>
+                    <td class="listCategoriesFullNameTD"><a href="/{{category.short}}">{{ category.name }}</a></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <p>No categories are available.</p>
+            {% endif %}
         </table>
     </div>
     
