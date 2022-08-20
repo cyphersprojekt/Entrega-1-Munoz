@@ -1,36 +1,6 @@
-<!DOCTYPE html>
+{% extends 'master.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <title>4jango/{{ category.short }}</title>
-    <link rel="icon" href="{% static 'images/favicon32.ico' %}">
-</head>
-<body>
-
-    <div class="allCategories center-screen">
-        {% for entry in categories %}
-        <a href="/{{ entry.short }}">[{{ entry.short }}]</a>
-        {% endfor %}
-    </div>
-
-    <div class="siteLinks">
-        <a class="goBack" href="{% url 'index' %}">Home</a><br>
-        <a class="aboutUs" href="{% url 'about' %}">About</a><br>
-        <a class="Search" href="{% url 'search' %}">Search</a><br>
-        {% if user.is_authenticated %}
-        <a class="myAccount" href="{% url 'user' %}">My profile</a><br>
-        <a class="settings" href="{% url 'settings' %}">Settings</a><br>
-        <a class="logout" href="{% url 'logout' %}">Logout</a><br>
-        {% else %}
-        <a class="login" href="{% url 'login' %}">Login</a><br>
-        <a class="register" href="{% url 'register' %}">Register</a>
-        {% endif %}
-    </div>
-
+{% block content %}
     <div class="center-screen categoryTitle">
         <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="9%" height="9%">
         <h1>{{ category.short }} - {{ category.name }}</h1>
@@ -44,3 +14,4 @@
             <input type="submit" value="Submit"><br>
         </form>
     </div>
+{% endblock %}

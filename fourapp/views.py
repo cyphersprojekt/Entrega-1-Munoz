@@ -47,6 +47,12 @@ def index(request):
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
     return render(request, 'index.html', {'categories': Category.objects.all()})
 
+def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
+
+    categories = Category.objects.all()
+    pagetitle = '4jango - Laboratorio'
+    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle})
+
 def image(request, image_id):
     image = Post.objects.get(post_id=image_id)
     return render(request, 'image.html', {'image': image})
@@ -57,10 +63,6 @@ def new_post(request):
         title = request.POST['title']
         content = request.POST['content']
         category = request.POST['category']
-        # Por algún motivo que no comprendo, si la imagen está vacía
-        # la poronga esta retorna un diccionario raro en lugar de NADA.
-        # así que si eso sucede, piso el valor de 'image' para que no me rompa
-        # las pelotas
         try:
             image = request.FILES['image']
         except:
