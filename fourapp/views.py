@@ -43,19 +43,20 @@ def logout_page(request):
 
 def index(request):
     #clear_posts()
+    pagetitle = '4jango - Home'
     if not Category.objects.filter(short='gen').exists():
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
-    return render(request, 'index.html', {'categories': Category.objects.all()})
+    return render(request, 'index.html', {'categories': Category.objects.all(), 'pagetitle': pagetitle})
 
 def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
-
     categories = Category.objects.all()
     pagetitle = '4jango - Laboratorio'
     return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle})
 
 def image(request, image_id):
     image = Post.objects.get(post_id=image_id)
-    return render(request, 'image.html', {'image': image})
+    pagetitle = f'4jango - Image {image_id}'
+    return render(request, 'image.html', {'image': image, 'pagetitle': pagetitle})
 
 def new_post(request):
     if request.method == 'POST':
@@ -78,6 +79,9 @@ def new_post(request):
         return redirect('/')
 
 def post_from_category(request, short):
+    category = Category.objects.get(short=short)
+    categories = Category.objects.all()
+    pagetitle = f'4jango - New post in {category.name}'
     if request.method == 'POST':
         username = request.POST['username']
         title = request.POST['title']
@@ -97,7 +101,7 @@ def post_from_category(request, short):
         post.save()
         return redirect(f'/{short}')
     else:
-        return render(request, 'post_from_category.html', {'category': Category.objects.get(short=short)})
+        return render(request, 'post_from_category.html', {'category': category, 'categories': categories, 'pagetitle': pagetitle})
 
 def reply(request, post_id):
     if request.method == 'POST':
@@ -121,22 +125,31 @@ def view_category_by_id(request, category_id):
     category = Category.objects.get(categoryid=category_id)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
-    context = {'category': category, 'posts': posts, 'categories': categories}
+    pagetitle = f'4jango - {category.name}'
+    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle}
+    if category.nsfw == True:
+        if request.user.is_authenticated:
+            return render(request, 'view_category.html', context)
+        else:
+            return redirect('/login/')
     return render(request, 'view_category.html', context)
 
 def view_category_by_short(request, short):
     category = Category.objects.get(short=short)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
+    pagetitle = f'4jango - {category.name}'
+    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle}
     if category.nsfw == True:
         if request.user.is_authenticated:
-            return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
+            return render(request, 'view_category.html', context)
         else:
             return redirect('/login/')
     else:
-        return render(request, 'view_category.html', {'category': category, 'posts': posts, 'categories': categories})
+        return render(request, 'view_category.html', context)
 
 def view_post(request, post_id):
+    pagetitle = f'4jango - Post #{post_id}'
     categories = Category.objects.all()
     category = Post.objects.get(post_id=post_id).category
     post = Post.objects.get(post_id=post_id)
@@ -151,12 +164,15 @@ def view_post(request, post_id):
         editable = False
         deletable = False
 
-    context = {'post': post, 'replies': replies, 'category': category, 'categories': categories, 'replycounter': replycounter, 'editable': editable, 'deletable': deletable}
+    context = {'post': post, 'replies': replies, 'category': category, 'categories': categories, 'replycounter': replycounter, 'editable': editable, 'deletable': deletable, 'pagetitle': pagetitle}
     return render(request, 'view_post.html', context)
 
 @login_required(login_url='/login/')
 def edit_post(request, post_id):
     post = Post.objects.get(post_id=post_id)
+    categories = Category.objects.all()
+    pagetitle = f'4jango - Edit post #{post_id}'
+    context = {'post': post, 'categories': categories, 'pagetitle': pagetitle}
     if request.method == 'POST':
         if post.registereduser == request.user:
             post.title = request.POST['title']
@@ -172,12 +188,15 @@ def edit_post(request, post_id):
             messages.error(request, 'You are not the owner of this post')
             return redirect(f'/post/{post_id}')
     else:
-        return render(request, 'edit_post.html', {'post': post})
+        return render(request, 'edit_post.html', context)
 
 @login_required(login_url='/login/')
 def delete_post(request, post_id):
+    categories = Category.objects.all()
     post = Post.objects.get(post_id=post_id)
     replies = Reply.objects.filter(post=post)
+    pagetitle = f'4jango - Delete post #{post_id}'
+    context = {'post': post, 'replies': replies, 'pagetitle': pagetitle, 'categories': categories}
     if request.method == 'POST':
         if post.registereduser == request.user:
             replies.delete()
@@ -187,23 +206,30 @@ def delete_post(request, post_id):
             messages.error(request, 'You are not the owner of this post')
             return redirect(f'/post/{post_id}')
     else:
-        return render(request, 'delete_post.html', {'post': post})
+        return render(request, 'delete_post.html', context)
 
 def about(request):
     categories = Category.objects.all()
-    return render(request, 'about.html', {'categories': categories})
+    pagetitle = '4jango - About'
+    context = {'categories': categories, 'pagetitle': pagetitle}
+    return render(request, 'about.html', context)
 
 @login_required(login_url='/login/')
 def view_user(request):
     user = request.user
     posts = Post.objects.filter(registereduser=user).order_by('-post_id')
-    return render(request, 'view_user.html', {'user': user, 'posts': posts, 'categories': Category.objects.all()})
+    pagetitle = f'4jango - {user.username}'
+    context = {'user': user, 'posts': posts, 'pagetitle': pagetitle}
+    return render(request, 'view_user.html', context)
 
 @login_required(login_url='/login/')
 def settings(request):
     user = request.user
+    pagetitle = f'4jango - Settings'
+    categories = Category.objects.all()
+    context = {'user': user, 'pagetitle': pagetitle, 'categories': categories}
     if request.method == 'GET':
-        return render(request, 'settings.html', {'user': user, 'categories': Category.objects.all()})
+        return render(request, 'settings.html', context)
 
     def change_username(request):
         user = request.user
@@ -283,12 +309,15 @@ def settings(request):
 
 def search(request):
     categories = Category.objects.all()
+    pagetitle = '4jango - Search'
+    context = {'categories': categories, 'pagetitle': pagetitle}
     if request.method == 'GET':
-        return render(request, 'search.html', {'categories': categories})
+        return render(request, 'search.html', context)
     else:
         search_query = request.POST['search_query']
         titles = Post.objects.filter(title__icontains=search_query)
         contents = Post.objects.filter(content__icontains=search_query)
         usernames = Post.objects.filter(username__icontains=search_query)
         posts = titles | contents | usernames
-        return render(request, 'search.html', {'posts': posts, 'categories': categories, 'search_query': search_query})
+        context = {'categories': categories, 'pagetitle': pagetitle, 'posts': posts}
+        return render(request, 'search.html', context)
