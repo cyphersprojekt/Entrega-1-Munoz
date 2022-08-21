@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -19,7 +20,8 @@ class Post(models.Model):
     username = models.CharField(max_length=255, null=False, blank=False, default='anon')
     registereduser = models.ForeignKey('auth.User', related_name='posts', on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, null=False)
-    content = models.TextField(null=False, blank=False)
+    #content = models.TextField(null=False, blank=False)
+    content = RichTextField(null=False, blank=False)
     image = models.ImageField(upload_to='postimgs/', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     edited = models.BooleanField(default=False)

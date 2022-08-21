@@ -1,6 +1,7 @@
+from multiprocessing import context
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
-from .forms import RegisterForm
+from .forms import RegisterForm, PostFormIndex, PostFormCategory
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
@@ -44,15 +45,19 @@ def logout_page(request):
 
 def index(request):
     #clear_posts()
+    form = PostFormIndex()
     pagetitle = '4jango - Home'
+    categories = Category.objects.all()
+    context = {'categories': categories, 'pagetitle': pagetitle, 'form': form}
     if not Category.objects.filter(short='gen').exists():
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
-    return render(request, 'index.html', {'categories': Category.objects.all(), 'pagetitle': pagetitle})
+    return render(request, 'index.html', context)
 
 def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
     categories = Category.objects.all()
     pagetitle = '4jango - Laboratorio'
-    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle})
+    form = PostFormCategory()
+    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle, 'form': form})
 
 """ def image(request, image_id):
     image = Post.objects.get(post_id=image_id)
@@ -72,7 +77,7 @@ def new_post(request):
         username = request.POST['username']
         title = request.POST['title']
         content = request.POST['content']
-        category = request.POST['category']
+        category = request.POST.get('category')
         try:
             image = request.FILES['image']
         except:
@@ -131,11 +136,12 @@ def reply(request, post_id):
         return redirect(f'/post/{post_id}')
 
 def view_category_by_id(request, category_id):
+    form = PostFormCategory()
     category = Category.objects.get(categoryid=category_id)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
     pagetitle = f'4jango - {category.name}'
-    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle}
+    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle, 'form': form}
     if category.nsfw == True:
         if request.user.is_authenticated:
             return render(request, 'view_category.html', context)
@@ -144,11 +150,12 @@ def view_category_by_id(request, category_id):
     return render(request, 'view_category.html', context)
 
 def view_category_by_short(request, short):
+    form = PostFormCategory()
     category = Category.objects.get(short=short)
     categories = Category.objects.all()
     posts = Post.objects.filter(category=category).order_by('-post_id')
     pagetitle = f'4jango - {category.name}'
-    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle}
+    context = {'category': category, 'posts': posts, 'categories': categories, 'pagetitle': pagetitle, 'form': form}
     if category.nsfw == True:
         if request.user.is_authenticated:
             return render(request, 'view_category.html', context)

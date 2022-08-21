@@ -7,7 +7,7 @@
 * [x] manage.py duplicado
 * [x] Clases basadas en vistas y mixin // Implementado, ahora el path /about/ es una clase basada en vista. (porque ese era el ejemplo en la documentacion de django, jeje.) sigo sin saber que es un mixin
 * [x] Advertencia de que no existen categorías cuando recién arrancas la app sin db // Lo agregué, pero igual para evitar problemas le puse a la vista del index que si no encuentra al menos una categoría cree una por defecto, por lo que en teoría jamás deberías ver la advertencia.
-* [ ] RichTextBox con ckeditor
+* [x] RichTextBox con ckeditor // hecho
 * [x] Nombre corto de las categorías como unique
 * [ ] App de accounts
 * [ ] Mail al registro

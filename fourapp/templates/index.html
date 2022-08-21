@@ -6,19 +6,14 @@
         <img src="{% static 'images/4jango.png' %}" alt="logo" class="logo" width="13%" height="13%">
     </div>
     <br>
+
     <div class="newPostForm center-screen">
-    <form class="form-group" action="/new_post/" method="post" enctype="multipart/form-data" nullabl>
-        <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username" maxlength="30"></textarea><br>
-        <textarea class="textInput" name="title" rows="1" cols="40" placeholder="title" maxlength="40"></textarea><br>
-        <textarea class="textInput" name="content" rows="5" cols="40" placeholder="content"></textarea><br>
-        <input class="form-control-file" type="file" name="image" placeholder="image" accept="image/*"><br>        
-            <select class="selectCategory"name="category">
-                {% for category in categories %}
-                <option value="{{ category.categoryid }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>        
-        <input type="submit" value="Submit"><br>
-    </form>
+        <form action="{% url 'new_post' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p}}
+            <input type="submit" value="New Post">
+        </form>
     </div>
 
     <div>

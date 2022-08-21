@@ -3,10 +3,15 @@ from .models import Post
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
-class PostForm(forms.ModelForm):
+class PostFormIndex(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['username', 'title', 'content', 'image', 'category']
+
+class PostFormCategory(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['username', 'title', 'content', 'image']
 
 class RegisterForm(UserCreationForm):
     class Meta:
