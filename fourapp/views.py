@@ -53,11 +53,11 @@ def index(request):
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
     return render(request, 'index.html', context)
 
-def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
+""" def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
     categories = Category.objects.all()
     pagetitle = '4jango - Laboratorio'
     form = PostFormCategory()
-    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle, 'form': form})
+    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle, 'form': form}) """
 
 """ def image(request, image_id):
     image = Post.objects.get(post_id=image_id)

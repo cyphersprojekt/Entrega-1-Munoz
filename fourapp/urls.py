@@ -17,7 +17,7 @@ from django.urls import path
 from fourapp import views
 
 
-
+app_name = 'fourapp'
 
 urlpatterns = [
     path('', views.index, name='index'), #index
@@ -39,5 +39,5 @@ urlpatterns = [
     #path('user/', views.view_user, name='user'), #ver el perfil del usuario {/user}
     #path('user/settings/', views.settings, name='settings'), #editar el perfil del usuario {/user/edit}
     path('search/', views.search, name='search'), #buscar un post {/search}
-    path('labo/', views.labo, name='labo'), #laboratorio {/labo}
+    #path('labo/', views.labo, name='labo'), #laboratorio {/labo}
 ]

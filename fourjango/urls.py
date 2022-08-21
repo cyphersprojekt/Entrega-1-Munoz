@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = 'fourjango'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('fourapp.urls')), #incluyo las urls de fourapp para manejar todo desde la app en lugar de usar el root
