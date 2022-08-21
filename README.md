@@ -9,7 +9,7 @@
 * [x] Advertencia de que no existen categorías cuando recién arrancas la app sin db // Lo agregué, pero igual para evitar problemas le puse a la vista del index que si no encuentra al menos una categoría cree una por defecto, por lo que en teoría jamás deberías ver la advertencia.
 * [x] RichTextBox con ckeditor // hecho
 * [x] Nombre corto de las categorías como unique
-* [ ] App de accounts
+* [x] App de accounts
 * [ ] Mail al registro
 * [ ] Perfil de usuario con nombre, avatar, descripcion, link a una pagina, email.
 * [ ] Acceso a una pantalla para que el usuario pueda modificar su informacion. Esta debe permitir modificar los datos nombrados en el punto anterior y, ademas, el password. 

@@ -12,7 +12,7 @@
         <table class="postTable">
             <tr>
                 <td class="postTableTitle">
-                    <a href="/post/{{ post.post_id }}" target="_blank"><h2>{{ post.title }}</h2></a>
+                    <h2>{{ post.title }}</h2>
                 </td>
                 {% if editable %}
                 <tr>
@@ -64,6 +64,7 @@
 
     <div class="replyContainer">
         <h3>Replies</h3>
+        {% if replies %}
         {% for reply in replies %}
         <table class="replyTable">
             <tr>
@@ -78,6 +79,9 @@
             </tr>
         </table>
         {% endfor %}
+        {% else %}
+        <p><small>There are no replies to this post, yet! Write your own!</small></p>
+        {% endif %}
     </div>
 
 </body>
