@@ -54,10 +54,18 @@ def labo(request): #Esta view existe únicamente para probar cosas sin romper na
     pagetitle = '4jango - Laboratorio'
     return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle})
 
-def image(request, image_id):
+""" def image(request, image_id):
     image = Post.objects.get(post_id=image_id)
     pagetitle = f'4jango - Image {image_id}'
-    return render(request, 'image.html', {'image': image, 'pagetitle': pagetitle})
+    return render(request, 'image.html', {'image': image, 'pagetitle': pagetitle}) """
+
+class Image(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['image'] = Post.objects.get(post_id=kwargs['image_id'])
+        context['pagetitle'] = f'4jango - Image {kwargs["image_id"]}'
+        return context
+    template_name = 'image.html'
 
 def new_post(request):
     if request.method == 'POST':

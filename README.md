@@ -22,7 +22,7 @@
 * [x] README.md con ubicacion de funcionalidades o pasos a seguir para probar las cosas y los nombres de los integrantes del grupo
 * [x] Nombre del repo "Entrega1+Apellidos"
 * [x] Video explicativo de 10 min max (subido en el proyecto o cargado el link al mismo)
-* [ ] Herencia implementada en los templates
+* [x] Herencia implementada en los templates
 * [x] .gitignore con venv, pycache, .sqlite3, media/
 * [x] Existencia del archivo requirements.txt actualizado
 * [x] Rama principal main
@@ -42,7 +42,7 @@
 * [x] Borrar todo codigo que no este en uso (imports, comments innecesarios)
 * [x] No dejar botones y accesos sin funcionalidad
 * [x] Minimo dos clases basadas en vista
-* [x] Uso de minimo un mixin en una CBV y un decorador en una view comun // no se que es mixin ni cbv, pero uso el decorador de loginrequired
+* [x] Uso de minimo un mixin en una CBV y un decorador en una view comun
 * [x] Adaptar template y vista cuando manejemos imagenes
 * [x] Un home
 * [x] Un 'acerca de nosotros' en el path 'about/'
