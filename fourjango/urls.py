@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('fourapp.urls')), #incluyo las urls de fourapp para manejar todo desde la app en lugar de usar el root
     path('users/', include('fourusers.urls')), #incluyo las urls de fourusers para manejar todo desde la app en lugar de usar el root
+    path('users/', include('django.contrib.auth.urls')), #incluyo las urls de django para manejar todo desde la app en lugar de usar el root
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #esto lo saqué de un video de codemy

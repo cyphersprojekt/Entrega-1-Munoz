@@ -10,7 +10,7 @@
 * [x] RichTextBox con ckeditor // hecho
 * [x] Nombre corto de las categorías como unique
 * [x] App de accounts
-* [ ] Mail al registro
+* [x] Mail al registro
 * [ ] Perfil de usuario con nombre, avatar, descripcion, link a una pagina, email.
 * [ ] Acceso a una pantalla para que el usuario pueda modificar su informacion. Esta debe permitir modificar los datos nombrados en el punto anterior y, ademas, el password. 
 * [ ] Mensajería 

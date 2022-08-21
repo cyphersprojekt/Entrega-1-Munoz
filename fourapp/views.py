@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 
-def register_page(request):
+""" def register_page(request):
     if request.user.is_authenticated:
         return redirect('/')
     else:
@@ -41,7 +41,7 @@ def login_page(request):
 
 def logout_page(request):
     logout(request)
-    return redirect('/')
+    return redirect('/') """
 
 def index(request):
     #clear_posts()
