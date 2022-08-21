@@ -18,6 +18,7 @@ from fourapp import views
 
 
 
+
 urlpatterns = [
     path('', views.index, name='index'), #index
     path('new_post/', views.new_post, name='new_post'), #no hay nada en el url, se usa para crear un nuevo post
@@ -32,7 +33,8 @@ urlpatterns = [
     path('logout/', views.logout_page, name='logout'), #logout {/logout}
     path('edit/<int:post_id>', views.edit_post, name='edit_post'), #editar un post {/edit/1}
     path('delete/<int:post_id>', views.delete_post, name='delete_post'), #eliminar un post {/delete/1}
-    path('about/', views.about, name='about'), #about {/about}
+    #path('about/', views.about, name='about'), #about {/about}
+    path('about/', views.AboutView.as_view(), name='about'), #about {/about}
     path('user/', views.view_user, name='user'), #ver el perfil del usuario {/user}
     path('user/settings/', views.settings, name='settings'), #editar el perfil del usuario {/user/edit}
     path('search/', views.search, name='search'), #buscar un post {/search}

@@ -5,7 +5,7 @@
 ### Revisiones:
 * [x] Herencia en los templates // Implementado, hay un master.html que contiene el header, los mensajes, el explorador de categorias superior y los sitelinks. Todo lo demas se maneja a traves del block content.
 * [x] manage.py duplicado
-* [ ] Clases basadas en vistas y mixin
+* [x] Clases basadas en vistas y mixin // Implementado, ahora el path /about/ es una clase basada en vista. (porque ese era el ejemplo en la documentacion de django, jeje.) sigo sin saber que es un mixin
 * [x] Advertencia de que no existen categorías cuando recién arrancas la app sin db // Lo agregué, pero igual para evitar problemas le puse a la vista del index que si no encuentra al menos una categoría cree una por defecto, por lo que en teoría jamás deberías ver la advertencia.
 * [ ] RichTextBox con ckeditor
 * [x] Nombre corto de las categorías como unique

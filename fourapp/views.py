@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
 
 def register_page(request):
@@ -208,11 +209,19 @@ def delete_post(request, post_id):
     else:
         return render(request, 'delete_post.html', context)
 
-def about(request):
+class AboutView(TemplateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['pagetitle'] = '4jango - About'
+        return context
+    template_name = 'about.html'    
+
+""" def about(request):
     categories = Category.objects.all()
     pagetitle = '4jango - About'
     context = {'categories': categories, 'pagetitle': pagetitle}
-    return render(request, 'about.html', context)
+    return render(request, 'about.html', context) """
 
 @login_required(login_url='/login/')
 def view_user(request):
