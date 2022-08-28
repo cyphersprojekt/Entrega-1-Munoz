@@ -238,98 +238,98 @@ class AboutView(TemplateView):
     context = {'categories': categories, 'pagetitle': pagetitle}
     return render(request, 'about.html', context) """
 
-@login_required(login_url='/login/')
-def view_user(request):
-    user = request.user
-    posts = Post.objects.filter(registereduser=user).order_by('-post_id')
-    pagetitle = f'4jango - {user.username}'
-    context = {'user': user, 'posts': posts, 'pagetitle': pagetitle}
-    return render(request, 'view_user.html', context)
+# @login_required(login_url='/login/')
+# def view_user(request):
+#     user = request.user
+#     posts = Post.objects.filter(registereduser=user).order_by('-post_id')
+#     pagetitle = f'4jango - {user.username}'
+#     context = {'user': user, 'posts': posts, 'pagetitle': pagetitle}
+#     return render(request, 'view_user.html', context)
 
-@login_required(login_url='/login/')
-def settings(request):
-    user = request.user
-    pagetitle = f'4jango - Settings'
-    categories = Category.objects.all()
-    context = {'user': user, 'pagetitle': pagetitle, 'categories': categories}
-    if request.method == 'GET':
-        return render(request, 'settings.html', context)
+#@login_required(login_url='/login/')
+# def settings(request):
+#     user = request.user
+#     pagetitle = f'4jango - Settings'
+#     categories = Category.objects.all()
+#     context = {'user': user, 'pagetitle': pagetitle, 'categories': categories}
+#     if request.method == 'GET':
+#         return render(request, 'settings.html', context)
 
-    def change_username(request):
-        user = request.user
-        if request.POST['username'] != '':
-            if request.POST['username'] != user.username:
-                if check_password(request.POST['password'], user.password):
-                    user.username = request.POST['username']
-                    user.save()
-                    messages.success(request, 'Username changed')
-                    return redirect('/user/settings')
-                else:
-                    messages.error(request, 'Wrong password when changing username')
-                    return redirect('/user/settings')
-            else:
-                messages.error(request, 'Can\'t change to the same username')
-                return redirect('/user/settings')
-        else:
-            messages.error(request, 'Username can\'t be empty')
-            return redirect('/user/settings')
+#     def change_username(request):
+#         user = request.user
+#         if request.POST['username'] != '':
+#             if request.POST['username'] != user.username:
+#                 if check_password(request.POST['password'], user.password):
+#                     user.username = request.POST['username']
+#                     user.save()
+#                     messages.success(request, 'Username changed')
+#                     return redirect('/user/settings')
+#                 else:
+#                     messages.error(request, 'Wrong password when changing username')
+#                     return redirect('/user/settings')
+#             else:
+#                 messages.error(request, 'Can\'t change to the same username')
+#                 return redirect('/user/settings')
+#         else:
+#             messages.error(request, 'Username can\'t be empty')
+#             return redirect('/user/settings')
 
-    def change_password(request):
-        user = request.user
-        if request.POST.get('new_password') != '':
-            if check_password(request.POST.get('oldpassword'), user.password):
-                if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
-                    user.password = make_password(request.POST.get('newpassword1'))
-                    user.save()
-                    messages.success(request, 'Password changed')
-                    return redirect('/user/settings')
-                else:
-                    messages.error(request, 'Passwords don\'t match')
-                    return redirect('/user/settings')
-            else:
-                messages.error(request, 'Wrong password when changing password')
-                return redirect('/user/settings')
-        else:
-            messages.error(request, 'Password can\'t be empty')
-            return redirect('/user/settings')
+#     def change_password(request):
+#         user = request.user
+#         if request.POST.get('new_password') != '':
+#             if check_password(request.POST.get('oldpassword'), user.password):
+#                 if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
+#                     user.password = make_password(request.POST.get('newpassword1'))
+#                     user.save()
+#                     messages.success(request, 'Password changed')
+#                     return redirect('/user/settings')
+#                 else:
+#                     messages.error(request, 'Passwords don\'t match')
+#                     return redirect('/user/settings')
+#             else:
+#                 messages.error(request, 'Wrong password when changing password')
+#                 return redirect('/user/settings')
+#         else:
+#             messages.error(request, 'Password can\'t be empty')
+#             return redirect('/user/settings')
 
-    def delete_posts(request):
-        user = request.user
-        if request.method == 'POST':
-            if check_password(request.POST.get('password'), user.password):
-                post = Post.objects.filter(registereduser=user).all()
-                post.delete()
-                messages.success(request, 'All posts deleted')
-                return redirect('/user/settings')
-            else:
-                messages.error(request, 'Wrong password when deleting posts')
-                return redirect('/user/settings')
-        else:
-            return redirect('/user/settings')
+#     def delete_posts(request):
+#         user = request.user
+#         if request.method == 'POST':
+#             if check_password(request.POST.get('password'), user.password):
+#                 post = Post.objects.filter(registereduser=user).all()
+#                 post.delete()
+#                 messages.success(request, 'All posts deleted')
+#                 return redirect('/user/settings')
+#             else:
+#                 messages.error(request, 'Wrong password when deleting posts')
+#                 return redirect('/user/settings')
+#         else:
+#             return redirect('/user/settings')
 
-    def delete_account(request):
-        user = request.user
-        if request.method == 'POST':
-            if check_password(request.POST.get('password'), user.password):
-                user.delete()
-                messages.success(request, 'Account deleted')
-                return redirect('/')
-            else:
-                messages.error(request, 'Wrong password')
-                return redirect('/user/settings')
-        else:
-            return redirect('/user/settings')
+#     def delete_account(request):
+#         user = request.user
+#         if request.method == 'POST':
+#             if check_password(request.POST.get('password'), user.password):
+#                 user.delete()
+#                 messages.success(request, 'Account deleted')
+#                 return redirect('/')
+#             else:
+#                 messages.error(request, 'Wrong password')
+#                 return redirect('/user/settings')
+#         else:
+#             return redirect('/user/settings')
 
-    if request.POST['form_type'] == 'change_username':
-        return change_username(request)
-    elif request.POST['form_type'] == 'change_password':
-        return change_password(request)
-    elif request.POST['form_type'] == 'delete_posts':
-        return delete_posts(request)
-    elif request.POST['form_type'] == 'delete_account':
-        return delete_account(request)
-    else:
-        return redirect('/user/settings')
+#     if request.POST['form_type'] == 'change_username':
+#         return change_username(request)
+#     elif request.POST['form_type'] == 'change_password':
+#         return change_password(request)
+#     elif request.POST['form_type'] == 'delete_posts':
+#         return delete_posts(request)
+#     elif request.POST['form_type'] == 'delete_account':
+#         return delete_account(request)
+#     else:
+#         return redirect('/user/settings')
 
 def search(request):
     categories = Category.objects.all()

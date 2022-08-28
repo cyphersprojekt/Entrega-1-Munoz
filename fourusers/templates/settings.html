@@ -8,44 +8,13 @@
     <br>
 
     <div>
-        <h3 class="center-screen">What do you want to do, {{ user.username }}?</h3>
+        <h3 class="center-screen">Here you can change your public profile, {{ user.username }}.</h3>
     </div>
 
     <div>        
         <div class="postContainer">
-            <h4 class ="center-screen">Change my username</h4>
-            <form class="center-screen"action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
-                <input class='center-screen'type="text" name="username" placeholder="new username" maxlength="40"><br>
-                <input class='center-screen'type="password" name="password" placeholder="password"><br>
-                <input type="hidden" name="form_type" value="change_username">
-                <input class="center-screen"type="submit" name="edusername"value="Submit"></form>
-        </div>
-
-        <div class="postContainer">
-            <h4 class ="center-screen">Change my password</h4>
-            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
-                <input class='center-screen'type="password" name="oldpassword" placeholder="old password"><br>
-                <input class='center-screen'type="password" name="newpassword1" placeholder="new password"><br>
-                <input class='center-screen'type="password" name="newpassword2" placeholder="confirm new password"><br>
-                <input type="hidden" name="form_type" value="change_password">
-                <input class="center-screen"type="submit" value="Submit"></form>
-        </div>
-
-        <div class="postContainer">
-            <h4 class="center-screen">Delete all my posts</h4>
-            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
-                <input class='center-screen'type="password" name="password" placeholder="password"><br>
-                <input type="hidden" name="form_type" value="delete_posts">
-                <input class="center-screen"type="submit" value="Submit"></form>
-        </div>
-
-        <div class="postContainer">
-            <h4 class="center-screen">Delete my account</h4>
-            <form class="center-screen" action="{% url 'settings' %}" method="POST" enctype="multipart/form-data">
-                <input class='center-screen'type="password" name="password" placeholder="password"><br>
-                <input type="hidden" name="form_type" value="delete_account">
-                <input class="center-screen"type="submit" value="Submit"></form>
-        </div>
-
-    </div>
+        <form>
+            {{ form.as_p}}
+            <input type="submit" value="Submit">
+        </form>
 {% endblock %}
