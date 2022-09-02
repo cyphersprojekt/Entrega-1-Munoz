@@ -49,7 +49,7 @@ def index(request):
     pagetitle = '4jango - Home'
     categories = Category.objects.all()
     context = {'categories': categories, 'pagetitle': pagetitle, 'form': form}
-    if not Category.objects.filter(short='gen').exists():
+    if not Category.objects.filter(categoryid=1).exists():
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
     return render(request, 'index.html', context)
 

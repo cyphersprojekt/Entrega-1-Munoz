@@ -8,13 +8,14 @@
     <br>
 
     <div>
-        <h3 class="center-screen">Here you can change your public profile, {{ user.username }}.</h3>
+        <h3 class="center-screen">What do you want to do,  {{ user.username }}?</h3>
     </div>
 
     <div>        
         <div class="postContainer">
-        <form>
+        <form action="{% url 'fourusers:settings' %}" method="POST" enctype="multipart/form-data">
             {{ form.as_p}}
+            <input type="hidden" name="user" value="{{ request.user }}" />
             <input type="submit" value="Submit">
         </form>
 {% endblock %}
