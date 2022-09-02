@@ -7,70 +7,26 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+from fourusers.models import Profile
 
-
-""" def register_page(request):
-    if request.user.is_authenticated:
-        return redirect('/')
-    else:
-        form = RegisterForm()
-        if request.method == 'POST':
-            form = RegisterForm(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'User successfully created!')
-                return redirect('login')
-        return render(request, 'register.html', {'form': form})
-
-def login_page(request):
-    if request.user.is_authenticated:
-        return redirect('/')
-    else:
-        if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, \
-                                        password=password)
-            if user != None:
-                login(request, user)
-                return redirect('/')
-            else:
-                messages.error(request, 'Invalid username or password')
-                return redirect('login')
-        return render(request, 'login.html')
-
-def logout_page(request):
-    logout(request)
-    return redirect('/') """
 
 def index(request):
-    #clear_posts()
     form = PostFormIndex()
     pagetitle = '4jango - Home'
     categories = Category.objects.all()
     context = {'categories': categories, 'pagetitle': pagetitle, 'form': form}
     if not Category.objects.filter(categoryid=1).exists():
         Category.objects.create(categoryid=1, name='General', short='gen', description='General discussion', nsfw=False)
+    if request.user.is_authenticated:
+        if not Profile.objects.filter(user=request.user).exists():
+            Profile.objects.create(user=request.user, name=request.user.username)
     return render(request, 'index.html', context)
 
-""" def labo(request): #Esta view existe únicamente para probar cosas sin romper nada
-    categories = Category.objects.all()
-    pagetitle = '4jango - Laboratorio'
-    form = PostFormCategory()
-    return render(request, 'labo.html', {'categories': categories, 'pagetitle': pagetitle, 'form': form}) """
 
-""" def image(request, image_id):
+def image(request, image_id):
     image = Post.objects.get(post_id=image_id)
     pagetitle = f'4jango - Image {image_id}'
-    return render(request, 'image.html', {'image': image, 'pagetitle': pagetitle}) """
-
-class Image(TemplateView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['image'] = Post.objects.get(post_id=kwargs['image_id'])
-        context['pagetitle'] = f'4jango - Image {kwargs["image_id"]}'
-        return context
-    template_name = 'image.html'
+    return render(request, 'image.html', {'image': image, 'pagetitle': pagetitle}) 
 
 def new_post(request):
     if request.method == 'POST':
@@ -231,105 +187,6 @@ class AboutView(TemplateView):
         context['pagetitle'] = '4jango - About'
         return context
     template_name = 'about.html'    
-
-""" def about(request):
-    categories = Category.objects.all()
-    pagetitle = '4jango - About'
-    context = {'categories': categories, 'pagetitle': pagetitle}
-    return render(request, 'about.html', context) """
-
-# @login_required(login_url='/login/')
-# def view_user(request):
-#     user = request.user
-#     posts = Post.objects.filter(registereduser=user).order_by('-post_id')
-#     pagetitle = f'4jango - {user.username}'
-#     context = {'user': user, 'posts': posts, 'pagetitle': pagetitle}
-#     return render(request, 'view_user.html', context)
-
-#@login_required(login_url='/login/')
-# def settings(request):
-#     user = request.user
-#     pagetitle = f'4jango - Settings'
-#     categories = Category.objects.all()
-#     context = {'user': user, 'pagetitle': pagetitle, 'categories': categories}
-#     if request.method == 'GET':
-#         return render(request, 'settings.html', context)
-
-#     def change_username(request):
-#         user = request.user
-#         if request.POST['username'] != '':
-#             if request.POST['username'] != user.username:
-#                 if check_password(request.POST['password'], user.password):
-#                     user.username = request.POST['username']
-#                     user.save()
-#                     messages.success(request, 'Username changed')
-#                     return redirect('/user/settings')
-#                 else:
-#                     messages.error(request, 'Wrong password when changing username')
-#                     return redirect('/user/settings')
-#             else:
-#                 messages.error(request, 'Can\'t change to the same username')
-#                 return redirect('/user/settings')
-#         else:
-#             messages.error(request, 'Username can\'t be empty')
-#             return redirect('/user/settings')
-
-#     def change_password(request):
-#         user = request.user
-#         if request.POST.get('new_password') != '':
-#             if check_password(request.POST.get('oldpassword'), user.password):
-#                 if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
-#                     user.password = make_password(request.POST.get('newpassword1'))
-#                     user.save()
-#                     messages.success(request, 'Password changed')
-#                     return redirect('/user/settings')
-#                 else:
-#                     messages.error(request, 'Passwords don\'t match')
-#                     return redirect('/user/settings')
-#             else:
-#                 messages.error(request, 'Wrong password when changing password')
-#                 return redirect('/user/settings')
-#         else:
-#             messages.error(request, 'Password can\'t be empty')
-#             return redirect('/user/settings')
-
-#     def delete_posts(request):
-#         user = request.user
-#         if request.method == 'POST':
-#             if check_password(request.POST.get('password'), user.password):
-#                 post = Post.objects.filter(registereduser=user).all()
-#                 post.delete()
-#                 messages.success(request, 'All posts deleted')
-#                 return redirect('/user/settings')
-#             else:
-#                 messages.error(request, 'Wrong password when deleting posts')
-#                 return redirect('/user/settings')
-#         else:
-#             return redirect('/user/settings')
-
-#     def delete_account(request):
-#         user = request.user
-#         if request.method == 'POST':
-#             if check_password(request.POST.get('password'), user.password):
-#                 user.delete()
-#                 messages.success(request, 'Account deleted')
-#                 return redirect('/')
-#             else:
-#                 messages.error(request, 'Wrong password')
-#                 return redirect('/user/settings')
-#         else:
-#             return redirect('/user/settings')
-
-#     if request.POST['form_type'] == 'change_username':
-#         return change_username(request)
-#     elif request.POST['form_type'] == 'change_password':
-#         return change_password(request)
-#     elif request.POST['form_type'] == 'delete_posts':
-#         return delete_posts(request)
-#     elif request.POST['form_type'] == 'delete_account':
-#         return delete_account(request)
-#     else:
-#         return redirect('/user/settings')
 
 def search(request):
     categories = Category.objects.all()

@@ -11,7 +11,7 @@
 * [x] Nombre corto de las categorías como unique
 * [x] App de accounts
 * [x] Mail al registro
-* [ ] Perfil de usuario con nombre, avatar, descripcion, link a una pagina, email. // Hecho el modelo y la vista, falta html
+* [x] Perfil de usuario con nombre, avatar, descripcion, link a una pagina, email.
 * [ ] Acceso a una pantalla para que el usuario pueda modificar su informacion. Esta debe permitir modificar los datos nombrados en el punto anterior y, ademas, el password. 
 * [ ] Mensajería 
 

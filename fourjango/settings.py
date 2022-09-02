@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'fourapp',
     'fourusers',
-    #'ckeditor',
+    'fourjango',
 ]
 
 MIDDLEWARE = [

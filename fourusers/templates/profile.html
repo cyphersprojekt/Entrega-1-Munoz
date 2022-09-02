@@ -2,11 +2,25 @@
 {% load static %}
 {% block content %}
 
-{{ profile.user.username}}
-{{ profile.user.name}}
-{{ profile.user.bio }}
-{{ profile.user.link}}
-{{ profile.user.email}}
+<br><br><br>
+<div class="postContainer userProfile">
+
+    {% if profile.picture %}
+    <a class="center-screen" href="../../media/{{profile.picture }}"><img class="center-screen"src="../../media/{{profile.picture }}" alt="profile picture" width="10%"></a><br>
+    {% else %}
+    <a class="center-screen"><img src="{% static 'images/default.jpg' %}" alt="no photo"><br></a>
+    {% endif %}
+    <h2 class="center-screen">{{profile.name}}</h2>
+    <h4 class="center-screen">@{{profile.user.username}}</h4>
+    <p class="center-screen">{{profile.bio }}</p>
+    {% if profile.link %}
+    <a href="{{profile.link}}" class="center-screen">External</a>
+    {% endif %}
+    <a href="mailto:{{profile.user.email}}" class="center-screen">Contact</a>
+</div>
+
+{% if posts %}
+<h2 style=margin-left:15px;>All my posts</h2>
 {% for post in posts %}
     <div class="postContainer">
         <table class="postTable">
@@ -25,10 +39,13 @@
             <tr>
                 <td class="postTableContent"><p>{{ post.content|safe }}</p></td>
                 {% if post.image %}
-                <td class="postTableImage"><a href="../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../media/{{ post.image }}" loading="lazy"></a></td>
+                <td class="postTableImage"><a href="../../media/{{ post.image }}" target="_blank"><img style="width:20%; height:20%" src="../../media/{{ post.image }}" loading="lazy"></a></td>
                 {% endif %}
             </tr>
         </table>
     </div>
     {% endfor %}
+{% else %}
+<h2 style=margin-left:15px;>This user hasn't posted anything yet</h2>
+{% endif %}
 {%endblock%}
