@@ -139,7 +139,7 @@ def view_post(request, post_id):
     context = {'post': post, 'replies': replies, 'category': category, 'categories': categories, 'replycounter': replycounter, 'editable': editable, 'deletable': deletable, 'pagetitle': pagetitle}
     return render(request, 'view_post.html', context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/users/login/')
 def edit_post(request, post_id):
     post = Post.objects.get(post_id=post_id)
     categories = Category.objects.all()
@@ -162,7 +162,7 @@ def edit_post(request, post_id):
     else:
         return render(request, 'edit_post.html', context)
 
-@login_required(login_url='/login/')
+@login_required(login_url='/users/login/')
 def delete_post(request, post_id):
     categories = Category.objects.all()
     post = Post.objects.get(post_id=post_id)

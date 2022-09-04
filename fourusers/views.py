@@ -49,7 +49,7 @@ def login_user(request):
                 return redirect('fourusers:login')
         return render(request, 'login.html')
 
-@login_required(login_url='/login/')
+@login_required(login_url='/users/login/')
 def log_out(request):
     logout(request)
     return redirect('fourapp:index')
@@ -75,12 +75,13 @@ class ProfilePage(DetailView):
         return context
 
 
-@login_required(login_url='/login/')
+@login_required(login_url='/users/login/')
 def settings(request):
     user = request.user
     profile = Profile.objects.get(pk=user.pk)
     pagetitle = f'4jango - Settings'
-    context = {'user': user, 'profile': profile, 'pagetitle': pagetitle}
+    categories = Category.objects.all()
+    context = {'user': user, 'profile': profile, 'pagetitle': pagetitle, 'categories': categories}
 
     if request.method == 'GET':
         return render(request, 'settings.html', context)
@@ -107,7 +108,7 @@ def settings(request):
         return redirect('fourusers:settings')
 
     def change_picture(request):
-        if request.POST['new_picture'] != user.profile.picture:
+        if request.FILES['new_picture'] != user.profile.picture:
             try:
                 user.profile.picture = request.FILES['new_picture']
                 user.profile.save()
@@ -132,7 +133,7 @@ def settings(request):
                 if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
                     user.password = make_password(request.POST.get('newpassword1'))
                     user.save()
-                    messages.success(request, 'Password changed')
+                    messages.success(request, 'Password changed, log back in')
                     return redirect('fourusers:settings')
                 else:
                     messages.error(request, 'Passwords don\'t match')

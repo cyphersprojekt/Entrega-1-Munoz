@@ -14,9 +14,9 @@
     <h4 class="center-screen">@{{profile.user.username}}</h4>
     <p class="center-screen">{{profile.bio }}</p>
     {% if profile.link %}
-    <a href="{{profile.link}}" class="center-screen">External</a>
+    <a href="{{profile.link}}" target="_blank"class="center-screen">External</a>
     {% endif %}
-    <a href="mailto:{{profile.user.email}}" class="center-screen">Contact</a>
+    <a href="mailto:{{profile.user.email}}" target="_blank" class="center-screen">Contact</a>
 </div>
 
 {% if posts %}

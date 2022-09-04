@@ -14,40 +14,58 @@
     <div>
         <h3 class="center-screen">Change my profile name</h3>
     </div>
-
     <div class="postContainer">        
-
+        <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            <input class="center-screen" name="new_name"type="text" placeholder="{{ user.profile.name }}" maxlength="40"><br>
+            <input type="hidden" name="form_type" value="change_name">
+            <input class="center-screen" type="submit" name="edname" value="Save"/>
+        </form>
     </div>
 
     <div>
         <h3 class="center-screen">Change my profile picture</h3>
     </div>
-
     <div class="postContainer">
-
+        <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            <input class="form-control-file center-screen" type="file" name="new_picture" accept="image/*">
+            <input type="hidden" name="form_type" value="change_picture">
+            <input class="center-screen" type="submit" name="edpicture" value="Save">
+        </form>
     </div>
 
     <div>
         <h3 class="center-screen">Change my bio</h3>
     </div>
-
     <div class="postContainer">
-
+        <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            <textarea class="center-screen" name="new_bio" rows="5" cols="40" placeholder="{{ user.profile.bio }}" maxlength="300"></textarea>
+            <input type="hidden" name="form_type" value="change_bio">
+            <input class="center-screen" type="submit" name="edbio" value="Save">
+        </form>
     </div>
 
     <div>
         <h3 class="center-screen">Change my external link</h3>
     </div>
-
     <div class="postContainer">
-
+        <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            <input class="center-screen" name="new_link" type="text" placeholder="{{ user.profile.link }}">
+            <input type="hidden" name="form_type" value="change_link">
+            <input type="submit" name="edlink" value="Save">
+        </form>
     </div>
 
     <div>
         <h3 class="center-screen">Change my password</h3>
     </div>
 
-    <div class="postContainer">
-        
+    <div class="postContainer center-screen">
+        <form class="" action="{% url 'fourusers:settings' %}" method="POST" enctype="multipart/form-data">
+            <input class='center-screen'type="password" name="oldpassword" placeholder="old password"><br>
+            <input class='center-screen'type="password" name="newpassword1" placeholder="new password"><br>
+            <input class='center-screen'type="password" name="newpassword2" placeholder="confirm new password"><br>
+            <input type="hidden" name="form_type" value="change_password">
+            <input class="center-screen"type="submit" value="Submit">
+        </form>
     </div>
 {% endblock %}
