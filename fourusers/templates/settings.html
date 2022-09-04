@@ -11,11 +11,43 @@
         <h3 class="center-screen">What do you want to do,  {{ user.username }}?</h3>
     </div>
 
-    <div>        
-        <div class="postContainer">
-        <form action="{% url 'fourusers:settings' %}" method="POST" enctype="multipart/form-data">
-            {{ form.as_p}}
-            <input type="hidden" name="user" value="{{ request.user }}" />
-            <input type="submit" value="Submit">
-        </form>
+    <div>
+        <h3 class="center-screen">Change my profile name</h3>
+    </div>
+
+    <div class="postContainer">        
+
+    </div>
+
+    <div>
+        <h3 class="center-screen">Change my profile picture</h3>
+    </div>
+
+    <div class="postContainer">
+
+    </div>
+
+    <div>
+        <h3 class="center-screen">Change my bio</h3>
+    </div>
+
+    <div class="postContainer">
+
+    </div>
+
+    <div>
+        <h3 class="center-screen">Change my external link</h3>
+    </div>
+
+    <div class="postContainer">
+
+    </div>
+
+    <div>
+        <h3 class="center-screen">Change my password</h3>
+    </div>
+
+    <div class="postContainer">
+        
+    </div>
 {% endblock %}

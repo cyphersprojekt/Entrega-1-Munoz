@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import DetailView
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib import messages
 from .forms import SignUpForm
 from .models import Profile
@@ -48,19 +49,19 @@ def login_user(request):
                 return redirect('fourusers:login')
         return render(request, 'login.html')
 
+@login_required(login_url='/login/')
 def log_out(request):
     logout(request)
     return redirect('fourapp:index')
 
-
-
-# va a funcionar siempre y cuando los usuarios se generen a traves del register
-# porque lo que triggerea la creacion del perfil es el redirect a index.
-# si se crea un usuario a traves de la consola, o del panel de administrador
-# lo primero que hay que hacer es iniciar sesion desde la web, porque sino
-# explota todo
-
 class ProfilePage(DetailView):
+    
+    # va a funcionar siempre y cuando los usuarios se generen a traves del register
+    # porque lo que triggerea la creacion del perfil es el redirect a index.
+    # si se crea un usuario a traves de la consola, o del panel de administrador
+    # lo primero que hay que hacer es iniciar sesion desde la web, porque sino
+    # explota todo
+
     model = Profile
     template_name = 'profile.html'
     def get_context_data(self, *args, **kwargs):
@@ -72,3 +73,86 @@ class ProfilePage(DetailView):
         context['puser'] = puser
         context['posts'] = Post.objects.filter(registereduser=puser.user_id).all()
         return context
+
+
+@login_required(login_url='/login/')
+def settings(request):
+    user = request.user
+    profile = Profile.objects.get(pk=user.pk)
+    pagetitle = f'4jango - Settings'
+    context = {'user': user, 'profile': profile, 'pagetitle': pagetitle}
+
+    if request.method == 'GET':
+        return render(request, 'settings.html', context)
+
+    def change_name(request):
+        if request.POST['new_name'] != '':
+            if request.POST['new_name'] != user.profile.name:
+                user.profile.name = request.POST['new_name']
+                user.profile.save()
+                messages.success(request,'Profile name successfully updated')
+            else:
+                messages.error(request, 'Your new name cannot be the same as the old one!')
+        else:
+            messages.error(request, 'Your new name cannot be empty!')
+        return redirect('fourusers:settings')
+    
+    def change_bio(request):
+        if request.POST['new_bio'] != user.profile.bio:
+            user.profile.bio = request.POST['new_bio']
+            user.profile.save()
+            messages.success(request,'Profile bio successfully updated')
+        else:
+            messages.error(request, 'Your new bio cannot be the same as the old one!')
+        return redirect('fourusers:settings')
+
+    def change_picture(request):
+        if request.POST['new_picture'] != user.profile.picture:
+            try:
+                user.profile.picture = request.FILES['new_picture']
+                user.profile.save()
+            except:
+                messages.error(request, 'There was an error on our side, your profile picture couldn\'t be changed')
+        else:
+            messages.error(request, 'It seems like your new profile picture is the same as the old one...')
+        return redirect('fourusers:settings')
+    
+    def change_link(request):
+        if request.POST['new_link'] != user.profile.link:
+            user.profile.link = request.POST['new_link']
+            user.profile.save()
+        else:
+            messages.error(request, 'It seems like your new external link is the same as the old one...')
+        return redirect('fourusers:settings')
+    
+    def change_password(request):
+        user = request.user
+        if request.POST.get('new_password') != '':
+            if check_password(request.POST.get('oldpassword'), user.password):
+                if request.POST.get('newpassword1') == request.POST.get('newpassword2'):
+                    user.password = make_password(request.POST.get('newpassword1'))
+                    user.save()
+                    messages.success(request, 'Password changed')
+                    return redirect('fourusers:settings')
+                else:
+                    messages.error(request, 'Passwords don\'t match')
+                    return redirect('fourusers:settings')
+            else:
+                messages.error(request, 'Wrong password when changing password')
+                return redirect('fourusers:settings')
+        else:
+            messages.error(request, 'Password can\'t be empty')
+            return redirect('fourusers:settings')
+
+    if request.POST['form_type'] == 'change_password':
+        return change_password(request)
+    elif request.POST['form_type'] == 'change_link':
+        return change_link(request)
+    elif request.POST['form_type'] == 'change_picture':
+        return change_picture(request)
+    elif request.POST['form_type'] == 'change_bio':
+        return change_bio(request)
+    elif request.POST['form_type'] == 'change_name':
+        return change_name(request)
+    else:
+        return redirect('fourusers:settings')
