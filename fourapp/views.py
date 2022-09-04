@@ -1,10 +1,7 @@
-from multiprocessing import context
 from django.shortcuts import redirect, render
 from .models import Category, Post, Reply
-from .forms import RegisterForm, PostFormIndex, PostFormCategory
+from .forms import PostFormIndex, PostFormCategory
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 from fourusers.models import Profile
