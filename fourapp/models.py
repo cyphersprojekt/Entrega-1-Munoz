@@ -28,7 +28,7 @@ class Post(models.Model):
     viewcounter = models.IntegerField(default=0)
     post_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.title
+        print(self.title, self.content, self.image, self.category, self.edited)
 
 class Reply(models.Model):
     reply_id = models.AutoField(primary_key=True)

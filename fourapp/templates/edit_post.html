@@ -8,6 +8,7 @@
 
     <div class="newPostForm center-screen">
         <form class="form-group" action="/edit/{{ post.post_id }}" method="post" enctype="multipart/form-data" >
+            {% csrf_token %}
             <textarea class="textInput" name="title" rows="1" cols="40" placeholder="{{ post.title }}" maxlength="40"></textarea><br>
             <textarea class="textInput" name="content" rows="5" cols="40" placeholder="{{ post.content }}"></textarea><br>
             <input class="form-control-file"type="file" name="image" placeholder="image" accept="image/*"><br>       

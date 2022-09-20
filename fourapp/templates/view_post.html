@@ -54,6 +54,7 @@
     <div class="postReply">
         <h3>Reply</h3>
         <form action="/post/{{ post.post_id }}/reply" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <textarea class="textInput" name="username" rows="1" cols="40" placeholder="username"></textarea><br>
             <textarea class="textInput" name="content" rows="5" cols="40" placeholder="reply"></textarea><br>
             <input class="form-control-file" type="file" name="image" id="image" accept="image/*">

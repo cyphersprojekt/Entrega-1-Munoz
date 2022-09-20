@@ -55,9 +55,12 @@ def post_from_category(request, short):
         content = request.POST['content']
         category = Category.objects.get(short=short)
         try:
-            image = request.FILES['image']
-        except:
+            image = request.FILES.get('image')
+            print('imagen re piola')
+        except Exception:
             image = None
+            print('imagen no piola')
+            print(Exception)
         if request.user.is_authenticated:
             registered_user = request.user
         else:

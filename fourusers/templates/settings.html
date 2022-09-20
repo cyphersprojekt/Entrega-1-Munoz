@@ -16,6 +16,7 @@
     </div>
     <div class="postContainer">        
         <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <input class="center-screen" name="new_name"type="text" placeholder="{{ user.profile.name }}" maxlength="40"><br>
             <input type="hidden" name="form_type" value="change_name">
             <input class="center-screen" type="submit" name="edname" value="Save"/>
@@ -27,6 +28,7 @@
     </div>
     <div class="postContainer">
         <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <input class="form-control-file center-screen" type="file" name="new_picture" accept="image/*">
             <input type="hidden" name="form_type" value="change_picture">
             <input class="center-screen" type="submit" name="edpicture" value="Save">
@@ -38,6 +40,7 @@
     </div>
     <div class="postContainer">
         <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <textarea class="center-screen" name="new_bio" rows="5" cols="40" placeholder="{{ user.profile.bio }}" maxlength="300"></textarea>
             <input type="hidden" name="form_type" value="change_bio">
             <input class="center-screen" type="submit" name="edbio" value="Save">
@@ -49,6 +52,7 @@
     </div>
     <div class="postContainer">
         <form class="center-screen" action="{% url 'fourusers:settings' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <input class="center-screen" name="new_link" type="text" placeholder="{{ user.profile.link }}">
             <input type="hidden" name="form_type" value="change_link">
             <input type="submit" name="edlink" value="Save">
@@ -61,6 +65,7 @@
 
     <div class="postContainer center-screen">
         <form class="" action="{% url 'fourusers:settings' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <input class='center-screen'type="password" name="oldpassword" placeholder="old password"><br>
             <input class='center-screen'type="password" name="newpassword1" placeholder="new password"><br>
             <input class='center-screen'type="password" name="newpassword2" placeholder="confirm new password"><br>
