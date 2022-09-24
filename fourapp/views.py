@@ -33,8 +33,10 @@ def new_post(request):
         category = request.POST.get('category')
         try:
             image = request.FILES['image']
+            print(f'{image}')
         except:
             image = None
+            print(f'imagen mala fea caca')
         if request.user.is_authenticated:
             registered_user = request.user
         else:
@@ -43,6 +45,10 @@ def new_post(request):
                     content=content, image=image, \
                     category=Category.objects.get(categoryid=category))
         post.save()
+        #if request.referrer == 'same-origin'
+        #return redirect('/')
+        #else:
+        #return redirect('fourapp:view_category pk post.category')
         return redirect('/')
 
 def post_from_category(request, short):
@@ -55,12 +61,13 @@ def post_from_category(request, short):
         content = request.POST['content']
         category = Category.objects.get(short=short)
         try:
-            image = request.FILES.get('image')
-            print('imagen re piola')
-        except Exception:
+            image = request.FILES['image']
+            #print('imagen re piola')
+            print(f'{image}')
+        except Exception as e:
             image = None
-            print('imagen no piola')
-            print(Exception)
+            #print('imagen no piola')
+            print(e)
         if request.user.is_authenticated:
             registered_user = request.user
         else:
@@ -70,8 +77,6 @@ def post_from_category(request, short):
         category=category)
         post.save()
         return redirect(f'/{short}')
-    else:
-        return render(request, 'post_from_category.html', {'category': category, 'categories': categories, 'pagetitle': pagetitle})
 
 def reply(request, post_id):
     if request.method == 'POST':
